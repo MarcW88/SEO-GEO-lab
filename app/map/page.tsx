@@ -17,7 +17,7 @@ const MapView = dynamic(() => import('@/components/MapView'), {
 
 export default function MapPage() {
   return (
-    <div className="flex flex-col" style={{ height: '100vh' }}>
+    <div className="flex flex-col h-full">
       <div className="px-6 py-4 border-b border-zinc-800/60 flex items-center justify-between shrink-0">
         <div>
           <h1 className="text-base font-semibold text-zinc-100 tracking-tight">Map</h1>
