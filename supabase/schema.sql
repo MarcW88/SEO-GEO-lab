@@ -47,3 +47,41 @@ $$ language plpgsql;
 create trigger experiments_updated_at
   before update on experiments
   for each row execute function update_updated_at();
+
+-- ─── Simulation workspace tables ──────────────────────────────────────────────
+-- Simulations are hypothetical workspaces — they do NOT affect experiments/relations.
+
+create table if not exists simulations (
+  id text primary key,
+  name text not null,
+  hypothesis text,
+  expected_value text default 'medium',
+  notes text,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
+create table if not exists simulation_nodes (
+  id text primary key,
+  simulation_id text references simulations(id) on delete cascade,
+  entity_id text not null,
+  entity_type text not null,
+  position_x float default 200,
+  position_y float default 200
+);
+
+create table if not exists simulation_edges (
+  id text primary key,
+  simulation_id text references simulations(id) on delete cascade,
+  source_id text not null,
+  target_id text not null,
+  relation_type text default 'related_to'
+);
+
+alter table simulations enable row level security;
+alter table simulation_nodes enable row level security;
+alter table simulation_edges enable row level security;
+
+create policy "Public read" on simulations for select using (true);
+create policy "Public read" on simulation_nodes for select using (true);
+create policy "Public read" on simulation_edges for select using (true);

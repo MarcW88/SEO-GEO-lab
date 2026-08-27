@@ -1,7 +1,11 @@
 import { NextResponse } from 'next/server'
-import { getExperiments, getCapabilities } from '@/lib/db'
+import { getExperiments, getCapabilities, getTools } from '@/lib/db'
 
 export async function GET() {
-  const [experiments, capabilities] = await Promise.all([getExperiments(), getCapabilities()])
-  return NextResponse.json({ experiments, capabilities })
+  const [experiments, capabilities, tools] = await Promise.all([
+    getExperiments(),
+    getCapabilities(),
+    getTools(),
+  ])
+  return NextResponse.json({ experiments, capabilities, tools })
 }
