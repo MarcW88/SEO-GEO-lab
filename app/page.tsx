@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { Plus, ArrowRight, AlertCircle } from 'lucide-react'
 import { StatusBadge, DecisionBadge } from '@/components/StatusBadge'
 import { CapabilityBar } from '@/components/CapabilityBar'
-import { getExperiments, getCapabilities } from '@/lib/db'
+import { getExperiments, getCapabilities, getTools } from '@/lib/db'
 import { STATUS_CONFIG, formatDate } from '@/lib/utils'
 import type { ExperimentStatus } from '@/lib/types'
 
@@ -16,19 +16,24 @@ const statusOrder: ExperimentStatus[] = [
   'archived',
 ]
 
-const STAT_META = [
-  { label: 'Programs', color: 'text-cyan-300', bg: 'bg-cyan-950/20', border: 'border-cyan-900/30', filter: () => true },
-  { label: 'Deployed', color: 'text-violet-400', bg: 'bg-violet-950/30', border: 'border-violet-900/40', filter: (e: { status: string }) => e.status === 'production' },
-  { label: 'Validated', color: 'text-emerald-400', bg: 'bg-emerald-950/30', border: 'border-emerald-900/40', filter: (e: { status: string }) => e.status === 'validated' },
-  { label: 'Running', color: 'text-cyan-400', bg: 'bg-cyan-950/30', border: 'border-cyan-900/40', filter: (e: { status: string }) => e.status === 'testing' },
-  { label: 'Initialized', color: 'text-zinc-400', bg: 'bg-zinc-800/40', border: 'border-zinc-700/40', filter: (e: { status: string }) => e.status === 'idea' },
-  { label: 'Derezzed', color: 'text-red-400', bg: 'bg-red-950/20', border: 'border-red-900/30', filter: (e: { status: string }) => e.status === 'failed' || e.status === 'archived' },
-]
 
 export default async function DashboardPage() {
-  const [experiments, capabilities] = await Promise.all([getExperiments(), getCapabilities()])
+  const [experiments, capabilities, tools] = await Promise.all([
+    getExperiments(), getCapabilities(), getTools(),
+  ])
 
-  const statCards = STAT_META.map((m) => ({ ...m, value: experiments.filter(m.filter).length }))
+  const sc: Record<string, number> = {
+    testing:    experiments.filter(e => e.status === 'testing').length,
+    idea:       experiments.filter(e => e.status === 'idea').length,
+    validated:  experiments.filter(e => e.status === 'validated').length,
+    production: experiments.filter(e => e.status === 'production').length,
+    failed:     experiments.filter(e => e.status === 'failed' || e.status === 'archived').length,
+    paused:     experiments.filter(e => e.status === 'paused').length,
+  }
+  const statusStrip = (
+    ['testing', 'idea', 'validated', 'production', 'failed', 'paused'] as ExperimentStatus[]
+  ).filter(s => sc[s] > 0)
+
   const needAttention = experiments.filter(
     (e) =>
       (e.status === 'validated' && (e.decision === 'deepen' || e.decision === 'industrialize')) ||
@@ -44,7 +49,7 @@ export default async function DashboardPage() {
         <div>
           <h1 className="text-2xl font-bold text-cyan-300 tracking-widest font-mono">CONTROL ROOM</h1>
           <p className="text-xs text-cyan-800 mt-1 font-mono">
-            {experiments.length} programs across {capabilities.length} function{capabilities.length !== 1 ? 's' : ''} — The Grid
+            {experiments.length} simulation{experiments.length !== 1 ? 's' : ''} · {capabilities.length} function{capabilities.length !== 1 ? 's' : ''} · {tools.length} program{tools.length !== 1 ? 's' : ''}
           </p>
         </div>
         <Link
@@ -56,16 +61,38 @@ export default async function DashboardPage() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-3 gap-3 mb-8">
-        {statCards.map(({ label, value, color, bg, border }) => (
-          <div
-            key={label}
-            className={`rounded-xl border p-4 ${bg} ${border}`}
-          >
-            <div className={`text-3xl font-bold ${color}`}>{value}</div>
-            <div className="text-sm text-zinc-500 mt-1">{label}</div>
-          </div>
-        ))}
+      {/* ── Entity KPI row ── */}
+      <div className="grid grid-cols-3 gap-3 mb-3">
+        <div className="rounded-xl border p-4 bg-cyan-950/20 border-cyan-900/30">
+          <div className="text-3xl font-bold text-cyan-300">{experiments.length}</div>
+          <div className="text-sm text-zinc-500 mt-1">Simulations</div>
+        </div>
+        <div className="rounded-xl border p-4 bg-violet-950/30 border-violet-900/40">
+          <div className="text-3xl font-bold text-violet-400">{capabilities.length}</div>
+          <div className="text-sm text-zinc-500 mt-1">Functions</div>
+        </div>
+        <div className="rounded-xl border p-4 bg-amber-950/20 border-amber-900/30">
+          <div className="text-3xl font-bold text-amber-400">{tools.length}</div>
+          <div className="text-sm text-zinc-500 mt-1">Programs</div>
+        </div>
+      </div>
+
+      {/* ── Status strip ── */}
+      <div className="flex items-center gap-2 mb-8 flex-wrap">
+        {statusStrip.map(status => {
+          const cfg = STATUS_CONFIG[status]
+          return (
+            <div
+              key={status}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-mono ${cfg.bg} ${cfg.border} ${cfg.color}`}
+            >
+              {cfg.icon} {sc[status]} {cfg.label}
+            </div>
+          )
+        })}
+        {statusStrip.length === 0 && (
+          <span className="text-xs text-zinc-700 font-mono">No simulations yet</span>
+        )}
       </div>
 
       <div className="grid grid-cols-5 gap-8">
