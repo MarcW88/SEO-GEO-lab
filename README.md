@@ -1,4 +1,22 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SEO / GEO Lab
+
+A living knowledge map for SEO and GEO R&D experiments — built with Next.js, React Flow, and Supabase.
+
+## What it is
+
+Not a pipeline orchestrator. Not a Jira board. A **capitalization layer** that answers:
+- What have I tested? What works?
+- What overlaps? What could be combined?
+- What deserves deepening or industrializing?
+
+## Views
+
+| View | Purpose |
+|------|---------|
+| **Overview** | Stats, "Need Attention" experiments, capability maturity |
+| **Experiments** | Searchable/filterable table of all experiments |
+| **Detail** | Full experiment card — learnings, tools, clients, next step, related |
+| **Map** | React Flow graph — tools → experiments → capabilities |
 
 ## Getting Started
 
