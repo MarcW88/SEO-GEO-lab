@@ -18,26 +18,12 @@ const MapView = dynamic(() => import('@/components/MapView'), {
 export default function MapPage() {
   return (
     <div className="flex flex-col h-full">
-      <div className="px-6 py-4 border-b border-cyan-900/25 flex items-center justify-between shrink-0" style={{ boxShadow: '0 1px 0 rgba(34,211,238,0.04)' }}>
+      <div className="px-6 py-3 border-b border-cyan-900/25 flex items-center justify-between shrink-0" style={{ boxShadow: '0 1px 0 rgba(34,211,238,0.04)' }}>
         <div>
           <h1 className="text-base font-bold text-cyan-300 tracking-widest font-mono">THE GRID</h1>
           <p className="text-xs text-cyan-800 mt-0.5 font-mono">
-            Programs → Simulations → Functions — drag to rearrange, scroll to zoom
+            Knowledge graph — established programs, simulations and functions
           </p>
-        </div>
-        <div className="flex items-center gap-4 text-xs text-cyan-800 font-mono">
-          <div className="flex items-center gap-1.5">
-            <div className="w-3 h-3 rounded-sm" style={{ background: 'rgba(217,119,6,0.2)', border: '1px solid rgba(217,119,6,0.4)' }} />
-            Program
-          </div>
-          <div className="flex items-center gap-1.5">
-            <div className="w-3 h-3 rounded-sm" style={{ background: 'rgba(34,211,238,0.1)', border: '1px solid rgba(34,211,238,0.3)' }} />
-            Simulation
-          </div>
-          <div className="flex items-center gap-1.5">
-            <div className="w-3 h-3 rounded-sm" style={{ background: 'rgba(167,139,250,0.15)', border: '1px solid rgba(167,139,250,0.35)' }} />
-            Function
-          </div>
         </div>
       </div>
       <div className="flex-1">

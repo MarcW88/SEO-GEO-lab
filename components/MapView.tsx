@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import {
   ReactFlow,
   ReactFlowProvider,
@@ -18,7 +18,7 @@ import {
   type Edge,
 } from '@xyflow/react'
 import '@xyflow/react/dist/style.css'
-import { STATUS_CONFIG } from '@/lib/utils'
+import { cn, STATUS_CONFIG } from '@/lib/utils'
 import type { Experiment, Capability, Tool, ExperimentStatus } from '@/lib/types'
 
 function ExperimentNode({ data }: NodeProps) {
@@ -113,84 +113,104 @@ function makeEdge(id: string, source: string, target: string, label: string): Ed
   }
 }
 
-// ── Inner canvas (inside ReactFlowProvider) ────────────────────
+// ─── Types ────────────────────────────────────────────────────
 
-function MapCanvas() {
+interface RawData {
+  experiments: Experiment[]
+  capabilities: Capability[]
+  tools: Tool[]
+}
+
+interface CanvasProps {
+  rawData: RawData | null
+  showTools: boolean
+  showExps: boolean
+  showCaps: boolean
+  statusFilter: string
+  showLabels: boolean
+}
+
+// ─── Canvas (inside ReactFlowProvider) ────────────────────────
+
+function MapCanvas({ rawData, showTools, showExps, showCaps, statusFilter, showLabels }: CanvasProps) {
   const { fitView } = useReactFlow()
   const [nodes, setNodes, onNodesChange] = useNodesState<Node>([])
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([])
 
   useEffect(() => {
-    fetch('/api/data')
-      .then(r => r.json())
-      .then(({ experiments = [], capabilities = [], tools = [] }: {
-        experiments: Experiment[]
-        capabilities: Capability[]
-        tools: Tool[]
-      }) => {
-        const newNodes: Node[] = []
-        const newEdges: Edge[] = []
-        const toolIds = new Set(tools.map((t: Tool) => t.id))
-        const expIds  = new Set(experiments.map((e: Experiment) => e.id))
+    if (!rawData) return
+    const { experiments = [], capabilities = [], tools = [] } = rawData
+    const toolIds = new Set(tools.map((t: Tool) => t.id))
+    const expIds  = new Set(experiments.map((e: Experiment) => e.id))
 
-        // ── Capabilities: right column ──
-        capabilities.forEach((c: Capability, i: number) => {
-          newNodes.push({
-            id: c.id, type: 'capabilityNode',
-            position: { x: 720, y: 80 + i * 200 },
-            data: { label: c.name, color: c.color },
-          })
-        })
+    // ── Build ALL nodes ──────────────────────────────────────
 
-        // ── Experiments: center column, aligned with their capability ──
-        experiments.forEach((exp: Experiment) => {
-          const capIdx = capabilities.findIndex((c: Capability) => c.id === exp.capability_id)
-          const capExps = experiments.filter((e: Experiment) => e.capability_id === exp.capability_id)
-          const posInGroup = capExps.indexOf(exp)
-          const baseY = capIdx >= 0 ? 80 + capIdx * 200 : 80
-          const groupOffset = (posInGroup - (capExps.length - 1) / 2) * 150
+    const allNodes: Node[] = []
+    const allEdges: Edge[] = []
 
-          newNodes.push({
-            id: exp.id, type: 'experimentNode',
-            position: { x: 360, y: baseY + groupOffset },
-            data: { label: exp.name, status: exp.status, decision: exp.decision },
-          })
-
-          // Experiment → Capability
-          if (exp.capability_id && capabilities.some((c: Capability) => c.id === exp.capability_id)) {
-            newEdges.push(makeEdge(`ec-${exp.id}`, exp.id, exp.capability_id, 'enables'))
-          }
-
-          // Tools → Experiment
-          for (const toolId of (exp.tool_ids ?? [])) {
-            if (toolIds.has(toolId)) {
-              newEdges.push(makeEdge(`te-${toolId}-${exp.id}`, toolId, exp.id, 'uses'))
-            }
-          }
-
-          // Related experiment links (only once per pair)
-          for (const relId of (exp.related_ids ?? [])) {
-            if (expIds.has(relId) && exp.id < relId) {
-              newEdges.push(makeEdge(`rel-${exp.id}-${relId}`, exp.id, relId, 'related_to'))
-            }
-          }
-        })
-
-        // ── Tools: left column ──
-        tools.forEach((t: Tool, i: number) => {
-          newNodes.push({
-            id: t.id, type: 'toolNode',
-            position: { x: 60, y: 80 + i * 155 },
-            data: { label: t.name },
-          })
-        })
-
-        setNodes(newNodes)
-        setEdges(newEdges)
-        requestAnimationFrame(() => fitView({ padding: 0.25, duration: 400 }))
+    capabilities.forEach((c: Capability, i: number) => {
+      allNodes.push({
+        id: c.id, type: 'capabilityNode',
+        position: { x: 720, y: 80 + i * 200 },
+        data: { label: c.name, color: c.color },
       })
-      .catch(() => {})
-  }, [fitView])
+    })
+
+    experiments.forEach((exp: Experiment) => {
+      const capIdx    = capabilities.findIndex((c: Capability) => c.id === exp.capability_id)
+      const capExps   = experiments.filter((e: Experiment) => e.capability_id === exp.capability_id)
+      const posInGrp  = capExps.indexOf(exp)
+      const baseY     = capIdx >= 0 ? 80 + capIdx * 200 : 80
+      const offset    = (posInGrp - (capExps.length - 1) / 2) * 150
+
+      allNodes.push({
+        id: exp.id, type: 'experimentNode',
+        position: { x: 360, y: baseY + offset },
+        data: { label: exp.name, status: exp.status, decision: exp.decision },
+      })
+
+      if (exp.capability_id && capabilities.some((c: Capability) => c.id === exp.capability_id))
+        allEdges.push(makeEdge(`ec-${exp.id}`, exp.id, exp.capability_id, 'enables'))
+
+      for (const tId of (exp.tool_ids ?? []))
+        if (toolIds.has(tId))
+          allEdges.push(makeEdge(`te-${tId}-${exp.id}`, tId, exp.id, 'uses'))
+
+      for (const rId of (exp.related_ids ?? []))
+        if (expIds.has(rId) && exp.id < rId)
+          allEdges.push(makeEdge(`rel-${exp.id}-${rId}`, exp.id, rId, 'related_to'))
+    })
+
+    tools.forEach((t: Tool, i: number) => {
+      allNodes.push({
+        id: t.id, type: 'toolNode',
+        position: { x: 60, y: 80 + i * 155 },
+        data: { label: t.name },
+      })
+    })
+
+    // ── Apply filters ────────────────────────────────────────
+
+    const visibleIds = new Set<string>()
+    const filteredNodes = allNodes.filter(n => {
+      if (n.type === 'toolNode'       && !showTools) return false
+      if (n.type === 'capabilityNode' && !showCaps)  return false
+      if (n.type === 'experimentNode') {
+        if (!showExps) return false
+        if (statusFilter !== 'all' && (n.data?.status as string) !== statusFilter) return false
+      }
+      visibleIds.add(n.id)
+      return true
+    })
+
+    const filteredEdges = allEdges
+      .filter(e => visibleIds.has(e.source) && visibleIds.has(e.target))
+      .map(e => showLabels ? e : { ...e, label: undefined })
+
+    setNodes(filteredNodes)
+    setEdges(filteredEdges)
+    requestAnimationFrame(() => fitView({ padding: 0.25, duration: 350 }))
+  }, [rawData, showTools, showExps, showCaps, statusFilter, showLabels, setNodes, setEdges, fitView])
 
   return (
     <div className="w-full h-full" style={{ background: '#050508' }}>
@@ -211,7 +231,7 @@ function MapCanvas() {
           style={{ background: '#08080d', border: '1px solid rgba(34,211,238,0.15)', borderRadius: 8 }}
           maskColor="rgba(5,5,8,0.75)"
           nodeColor={(node) => {
-            if (node.type === 'toolNode') return '#92400e'
+            if (node.type === 'toolNode')       return '#92400e'
             if (node.type === 'capabilityNode') return '#5b21b6'
             const status = (node.data?.status as ExperimentStatus) ?? 'idea'
             const colors: Record<ExperimentStatus, string> = {
@@ -226,11 +246,150 @@ function MapCanvas() {
   )
 }
 
-// Wrap in ReactFlowProvider so useReactFlow() works
+// ─── Status filter config ─────────────────────────────────────
+
+const STATUS_FILTERS = [
+  { value: 'all',        label: 'All' },
+  { value: 'testing',    label: 'Running' },
+  { value: 'production', label: 'Deployed' },
+  { value: 'validated',  label: 'Validated' },
+  { value: 'failed',     label: 'Derezzed' },
+]
+
+// ─── Outer wrapper — holds filter state + filter bar ──────────
+
 export default function MapView() {
+  const [rawData,      setRawData]      = useState<RawData | null>(null)
+  const [showTools,    setShowTools]    = useState(true)
+  const [showExps,     setShowExps]     = useState(true)
+  const [showCaps,     setShowCaps]     = useState(true)
+  const [statusFilter, setStatusFilter] = useState('all')
+  const [showLabels,   setShowLabels]   = useState(true)
+
+  useEffect(() => {
+    fetch('/api/data').then(r => r.json()).then(setRawData).catch(() => {})
+  }, [])
+
+  const counts = useMemo(() => ({
+    tools: rawData?.tools?.length ?? 0,
+    exps:  rawData?.experiments?.length ?? 0,
+    caps:  rawData?.capabilities?.length ?? 0,
+  }), [rawData])
+
   return (
-    <ReactFlowProvider>
-      <MapCanvas />
-    </ReactFlowProvider>
+    <div className="flex flex-col h-full">
+
+      {/* ── Filter bar ── */}
+      <div
+        className="px-4 py-2 border-b border-cyan-900/20 flex items-center gap-3 shrink-0 flex-wrap"
+        style={{ background: 'rgba(5,5,8,0.95)' }}
+      >
+        {/* Type toggles */}
+        <div className="flex items-center gap-1.5">
+          <button
+            onClick={() => setShowTools(v => !v)}
+            className={cn(
+              'flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono border transition-all',
+              showTools
+                ? 'bg-amber-950/40 border-amber-900/50 text-amber-400'
+                : 'border-zinc-800/40 text-zinc-600 hover:text-zinc-400',
+            )}
+          >
+            <span>⬡</span> Programs
+            {counts.tools > 0 && (
+              <span className={cn('text-[10px]', showTools ? 'text-amber-600' : 'text-zinc-700')}>
+                {counts.tools}
+              </span>
+            )}
+          </button>
+
+          <button
+            onClick={() => setShowExps(v => !v)}
+            className={cn(
+              'flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono border transition-all',
+              showExps
+                ? 'bg-cyan-950/30 border-cyan-900/40 text-cyan-400'
+                : 'border-zinc-800/40 text-zinc-600 hover:text-zinc-400',
+            )}
+          >
+            <span>◉</span> Simulations
+            {counts.exps > 0 && (
+              <span className={cn('text-[10px]', showExps ? 'text-cyan-700' : 'text-zinc-700')}>
+                {counts.exps}
+              </span>
+            )}
+          </button>
+
+          <button
+            onClick={() => setShowCaps(v => !v)}
+            className={cn(
+              'flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono border transition-all',
+              showCaps
+                ? 'bg-violet-950/30 border-violet-900/40 text-violet-400'
+                : 'border-zinc-800/40 text-zinc-600 hover:text-zinc-400',
+            )}
+          >
+            <span>◈</span> Functions
+            {counts.caps > 0 && (
+              <span className={cn('text-[10px]', showCaps ? 'text-violet-700' : 'text-zinc-700')}>
+                {counts.caps}
+              </span>
+            )}
+          </button>
+        </div>
+
+        {/* Divider */}
+        <div className="w-px h-4 bg-cyan-900/30" />
+
+        {/* Status filter (only relevant when Simulations visible) */}
+        <div className={cn('flex items-center gap-1 transition-opacity', !showExps && 'opacity-30 pointer-events-none')}>
+          {STATUS_FILTERS.map(f => (
+            <button
+              key={f.value}
+              onClick={() => setStatusFilter(f.value)}
+              className={cn(
+                'px-2 py-1 rounded-md text-[11px] font-mono border transition-all',
+                statusFilter === f.value
+                  ? 'bg-zinc-800 border-zinc-600 text-zinc-100'
+                  : 'border-zinc-800/40 text-zinc-600 hover:text-zinc-400',
+              )}
+            >
+              {f.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Divider */}
+        <div className="w-px h-4 bg-cyan-900/30" />
+
+        {/* Labels toggle */}
+        <button
+          onClick={() => setShowLabels(v => !v)}
+          className={cn(
+            'px-2 py-1 rounded-md text-[11px] font-mono border transition-all',
+            showLabels
+              ? 'border-zinc-700 text-zinc-400 bg-zinc-800/40'
+              : 'border-zinc-800/40 text-zinc-600 hover:text-zinc-400',
+          )}
+        >
+          Labels
+        </button>
+      </div>
+
+      {/* ── Canvas ── */}
+      <div className="flex-1">
+        <ReactFlowProvider>
+          <MapCanvas
+            rawData={rawData}
+            showTools={showTools}
+            showExps={showExps}
+            showCaps={showCaps}
+            statusFilter={statusFilter}
+            showLabels={showLabels}
+          />
+        </ReactFlowProvider>
+      </div>
+
+    </div>
   )
 }
