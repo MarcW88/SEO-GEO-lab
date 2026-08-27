@@ -10,7 +10,6 @@ import {
   useEdgesState,
   Handle,
   Position,
-  MarkerType,
   type NodeProps,
 } from '@xyflow/react'
 import '@xyflow/react/dist/style.css'
