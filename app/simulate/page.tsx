@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useCallback, useMemo, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import {
   ReactFlow,
   ReactFlowProvider,
@@ -18,7 +19,7 @@ import {
   type Edge,
 } from '@xyflow/react'
 import '@xyflow/react/dist/style.css'
-import { Search, Save, Trash2, Zap, Plus, X } from 'lucide-react'
+import { Search, Save, Trash2, Zap, Plus, X, FlaskConical } from 'lucide-react'
 import { cn, STATUS_CONFIG } from '@/lib/utils'
 import type { Experiment, Capability, Tool, ExperimentStatus } from '@/lib/types'
 
@@ -147,6 +148,17 @@ function SimulateCanvas() {
   const [saving,        setSaving]        = useState(false)
   const [saved,         setSaved]         = useState(false)
 
+  // ── Convert state ────────────────────────────────────────────
+  const router = useRouter()
+  const [showConvert,  setShowConvert]  = useState(false)
+  const [convName,     setConvName]     = useState('')
+  const [convCapId,    setConvCapId]    = useState('')
+  const [convToolIds,  setConvToolIds]  = useState<string[]>([])
+  const [convStatus,   setConvStatus]   = useState<ExperimentStatus>('idea')
+  const [convQuestion, setConvQuestion] = useState('')
+  const [convTags,     setConvTags]     = useState('')
+  const [converting,   setConverting]   = useState(false)
+
   useEffect(() => {
     fetch('/api/data')
       .then(r => r.json())
@@ -263,10 +275,48 @@ function SimulateCanvas() {
     }
   }
 
+  const openConvert = () => {
+    const capNode  = nodes.find(n => n.type === 'capabilityNode')
+    const toolNodes = nodes.filter(n => n.type === 'toolNode')
+    setConvName(simName || '')
+    setConvCapId((capNode?.id as string) ?? '')
+    setConvToolIds(toolNodes.map(n => n.id as string))
+    setConvQuestion(hypothesis || '')
+    setConvTags('')
+    setConvStatus('idea')
+    setShowConvert(true)
+  }
+
+  const handleConvert = async () => {
+    if (!convName.trim()) return
+    setConverting(true)
+    try {
+      const expNodes = nodes.filter(n => n.type === 'experimentNode')
+      const res = await fetch('/api/experiments', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name:          convName.trim(),
+          capability_id: convCapId,
+          tool_ids:      convToolIds,
+          related_ids:   expNodes.map(n => n.id as string),
+          status:        convStatus,
+          question:      convQuestion,
+          tags:          convTags.split(',').map(t => t.trim()).filter(Boolean),
+        }),
+      })
+      const { id, error } = await res.json()
+      if (error) throw new Error(error)
+      router.push(`/experiments/${id}`)
+    } catch {
+      setConverting(false)
+    }
+  }
+
   // ─────────────────────────────────────────────────────────────
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full relative">
 
       {/* ── Header ── */}
       <div
@@ -287,6 +337,14 @@ function SimulateCanvas() {
           >
             <Trash2 className="w-3 h-3" />
             CLEAR
+          </button>
+          <button
+            onClick={openConvert}
+            disabled={nodes.length === 0}
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono font-medium bg-violet-900/40 hover:bg-violet-800/40 border border-violet-800/40 text-violet-300 rounded-lg transition-all disabled:opacity-30"
+          >
+            <FlaskConical className="w-3.5 h-3.5" />
+            CONVERT
           </button>
           <button
             onClick={handleSave}
@@ -548,6 +606,166 @@ function SimulateCanvas() {
         </div>
 
       </div>
+
+      {/* ── Convert to Experiment modal ── */}
+      {showConvert && (
+        <div
+          className="absolute inset-0 flex items-center justify-center z-50"
+          style={{ background: 'rgba(5,5,8,0.75)' }}
+          onClick={() => setShowConvert(false)}
+        >
+          <div
+            className="bg-[#08080d] border border-violet-900/40 rounded-xl p-5 w-[480px] max-h-[85vh] overflow-y-auto"
+            style={{ boxShadow: '0 0 50px rgba(139,92,246,0.1)' }}
+            onClick={e => e.stopPropagation()}
+          >
+            {/* Modal header */}
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <div className="text-sm font-bold text-violet-300 tracking-widest font-mono">CONVERT TO EXPERIMENT</div>
+                <div className="text-[11px] text-violet-800 font-mono mt-0.5">Creates a real entry in your Lab</div>
+              </div>
+              <button onClick={() => setShowConvert(false)} className="text-zinc-600 hover:text-zinc-400 mt-0.5">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Canvas summary */}
+            <div className="flex flex-wrap gap-2 mb-4 p-3 bg-zinc-900/30 border border-zinc-800/40 rounded-lg">
+              {nodes.filter(n => n.type === 'toolNode').length > 0 && (
+                <span className="text-[10px] font-mono text-amber-400 bg-amber-950/30 border border-amber-900/30 px-2 py-1 rounded">
+                  ⬡ {nodes.filter(n => n.type === 'toolNode').length} Program{nodes.filter(n => n.type === 'toolNode').length > 1 ? 's' : ''}
+                </span>
+              )}
+              {nodes.filter(n => n.type === 'capabilityNode').length > 0 && (
+                <span className="text-[10px] font-mono text-violet-400 bg-violet-950/30 border border-violet-900/30 px-2 py-1 rounded">
+                  ◈ {nodes.filter(n => n.type === 'capabilityNode').length} Function
+                </span>
+              )}
+              {nodes.filter(n => n.type === 'experimentNode').length > 0 && (
+                <span className="text-[10px] font-mono text-cyan-400 bg-cyan-950/20 border border-cyan-900/30 px-2 py-1 rounded">
+                  ◉ {nodes.filter(n => n.type === 'experimentNode').length} Related
+                </span>
+              )}
+              {nodes.length === 0 && (
+                <span className="text-[11px] font-mono text-zinc-600">No nodes on canvas</span>
+              )}
+            </div>
+
+            <div className="space-y-3">
+              {/* Name */}
+              <div>
+                <label className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider block mb-1">
+                  Name <span className="text-red-500">*</span>
+                </label>
+                <input
+                  value={convName}
+                  onChange={e => setConvName(e.target.value)}
+                  placeholder="Experiment name…"
+                  className="w-full bg-zinc-900/40 border border-zinc-800/60 rounded-lg px-3 py-2 text-sm text-zinc-200 placeholder:text-zinc-700 focus:outline-none focus:border-violet-900/50 transition-all"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                {/* Status */}
+                <div>
+                  <label className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider block mb-1">Status</label>
+                  <select
+                    value={convStatus}
+                    onChange={e => setConvStatus(e.target.value as ExperimentStatus)}
+                    className="w-full bg-zinc-900/40 border border-zinc-800/60 rounded-lg px-3 py-2 text-sm text-zinc-300 focus:outline-none focus:border-violet-900/50 transition-all"
+                  >
+                    <option value="idea">Initialized</option>
+                    <option value="testing">Running</option>
+                    <option value="validated">Validated</option>
+                    <option value="production">Deployed</option>
+                  </select>
+                </div>
+                {/* Capability */}
+                <div>
+                  <label className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider block mb-1">Function</label>
+                  <select
+                    value={convCapId}
+                    onChange={e => setConvCapId(e.target.value)}
+                    className="w-full bg-zinc-900/40 border border-zinc-800/60 rounded-lg px-3 py-2 text-sm text-zinc-300 focus:outline-none focus:border-violet-900/50 transition-all"
+                  >
+                    <option value="">— none —</option>
+                    {capabilities.map(c => (
+                      <option key={c.id} value={c.id}>{c.name}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              {/* Question */}
+              <div>
+                <label className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider block mb-1">Question</label>
+                <textarea
+                  value={convQuestion}
+                  onChange={e => setConvQuestion(e.target.value)}
+                  placeholder="What specific question does this experiment answer?"
+                  rows={3}
+                  className="w-full bg-zinc-900/40 border border-zinc-800/60 rounded-lg px-3 py-2 text-sm text-zinc-300 placeholder:text-zinc-700 focus:outline-none focus:border-violet-900/50 resize-none transition-all"
+                />
+              </div>
+
+              {/* Tools */}
+              {nodes.filter(n => n.type === 'toolNode').length > 0 && (
+                <div>
+                  <label className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider block mb-2">Programs used</label>
+                  <div className="flex flex-wrap gap-3">
+                    {nodes.filter(n => n.type === 'toolNode').map(n => (
+                      <label key={n.id} className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={convToolIds.includes(n.id as string)}
+                          onChange={e => {
+                            const id = n.id as string
+                            if (e.target.checked) setConvToolIds(prev => [...prev, id])
+                            else setConvToolIds(prev => prev.filter(x => x !== id))
+                          }}
+                          className="accent-amber-500"
+                        />
+                        <span className="text-xs font-mono text-amber-400">{n.data.label as string}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Tags */}
+              <div>
+                <label className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider block mb-1">Tags</label>
+                <input
+                  value={convTags}
+                  onChange={e => setConvTags(e.target.value)}
+                  placeholder="seo, data, competitive… (comma separated)"
+                  className="w-full bg-zinc-900/40 border border-zinc-800/60 rounded-lg px-3 py-2 text-sm text-zinc-300 placeholder:text-zinc-700 focus:outline-none focus:border-violet-900/50 transition-all"
+                />
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="flex items-center justify-end gap-2 mt-5 pt-4 border-t border-zinc-800/40">
+              <button
+                onClick={() => setShowConvert(false)}
+                className="px-3 py-1.5 text-xs font-mono text-zinc-500 hover:text-zinc-300 border border-zinc-800/40 hover:border-zinc-700 rounded-lg transition-all"
+              >
+                CANCEL
+              </button>
+              <button
+                onClick={handleConvert}
+                disabled={!convName.trim() || converting}
+                className="flex items-center gap-1.5 px-4 py-1.5 text-xs font-mono font-medium bg-violet-900/50 hover:bg-violet-800/50 border border-violet-700/50 text-violet-200 rounded-lg transition-all disabled:opacity-40"
+              >
+                <FlaskConical className="w-3.5 h-3.5" />
+                {converting ? 'CREATING…' : 'CREATE EXPERIMENT'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   )
 }
