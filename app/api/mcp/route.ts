@@ -422,7 +422,23 @@ export async function OPTIONS() {
   return new Response(null, { status: 204, headers: CORS_HEADERS })
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const auth = req.headers.get('authorization') ?? ''
+  const token = auth.startsWith('Bearer ') ? auth.slice(7) : null
+  if (!token || !isValidAccessToken(token)) {
+    const base = `https://${req.headers.get('host') ?? ''}`
+    return new Response(
+      JSON.stringify({ status: 'unauthorized', server: 'seo-geo-lab-mcp' }),
+      {
+        status: 401,
+        headers: {
+          ...CORS_HEADERS,
+          'Content-Type': 'application/json',
+          'WWW-Authenticate': `Bearer realm="mcp", resource_metadata="${base}/.well-known/oauth-protected-resource"`,
+        },
+      }
+    )
+  }
   return json({ status: 'ok', server: 'seo-geo-lab-mcp', version: '1.0.0' })
 }
 
