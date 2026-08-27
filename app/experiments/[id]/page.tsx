@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, ExternalLink, Ticket, ChevronRight, AlertTriangle, CheckCircle, XCircle } from 'lucide-react'
 import { StatusBadge, DecisionBadge, ValueStars } from '@/components/StatusBadge'
-import { experiments, capabilities, tools } from '@/lib/data'
+import { getExperiment, getCapabilities, getTools } from '@/lib/db'
 import { formatDate, cn } from '@/lib/utils'
 import type { Learning } from '@/lib/types'
 
@@ -26,12 +26,21 @@ function LearningItem({ learning }: { learning: Learning }) {
 
 export default async function ExperimentDetailPage({ params }: Props) {
   const { id } = await params
-  const experiment = experiments.find((e) => e.id === id)
+  const [experiment, capabilities, tools] = await Promise.all([
+    getExperiment(id),
+    getCapabilities(),
+    getTools(),
+  ])
   if (!experiment) notFound()
 
   const capability = capabilities.find((c) => c.id === experiment.capability_id)
   const experimentTools = tools.filter((t) => experiment.tool_ids.includes(t.id))
-  const relatedExperiments = experiments.filter((e) => experiment.related_ids.includes(e.id))
+  const relatedIds = experiment.related_ids ?? []
+
+  const allExperiments = relatedIds.length > 0
+    ? await (await import('@/lib/db')).getExperiments()
+    : []
+  const relatedExperiments = allExperiments.filter((e) => relatedIds.includes(e.id))
 
   return (
     <div className="p-8 max-w-5xl mx-auto">

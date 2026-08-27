@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { Plus, ArrowRight, AlertCircle } from 'lucide-react'
 import { StatusBadge, DecisionBadge } from '@/components/StatusBadge'
 import { CapabilityBar } from '@/components/CapabilityBar'
-import { experiments, capabilities } from '@/lib/data'
+import { getExperiments, getCapabilities } from '@/lib/db'
 import { STATUS_CONFIG, formatDate } from '@/lib/utils'
 import type { ExperimentStatus } from '@/lib/types'
 
@@ -16,23 +16,24 @@ const statusOrder: ExperimentStatus[] = [
   'archived',
 ]
 
-const statCards = [
-  { label: 'Total', value: experiments.length, color: 'text-zinc-200', bg: 'bg-zinc-800/50', border: 'border-zinc-700/50' },
-  { label: 'Production', value: experiments.filter((e) => e.status === 'production').length, color: 'text-violet-400', bg: 'bg-violet-950/30', border: 'border-violet-900/40' },
-  { label: 'Validated', value: experiments.filter((e) => e.status === 'validated').length, color: 'text-emerald-400', bg: 'bg-emerald-950/30', border: 'border-emerald-900/40' },
-  { label: 'Testing', value: experiments.filter((e) => e.status === 'testing').length, color: 'text-blue-400', bg: 'bg-blue-950/30', border: 'border-blue-900/40' },
-  { label: 'Ideas', value: experiments.filter((e) => e.status === 'idea').length, color: 'text-zinc-400', bg: 'bg-zinc-800/40', border: 'border-zinc-700/40' },
-  { label: 'Failed / Archived', value: experiments.filter((e) => e.status === 'failed' || e.status === 'archived').length, color: 'text-red-400', bg: 'bg-red-950/20', border: 'border-red-900/30' },
+const STAT_META = [
+  { label: 'Total', color: 'text-zinc-200', bg: 'bg-zinc-800/50', border: 'border-zinc-700/50', filter: () => true },
+  { label: 'Production', color: 'text-violet-400', bg: 'bg-violet-950/30', border: 'border-violet-900/40', filter: (e: { status: string }) => e.status === 'production' },
+  { label: 'Validated', color: 'text-emerald-400', bg: 'bg-emerald-950/30', border: 'border-emerald-900/40', filter: (e: { status: string }) => e.status === 'validated' },
+  { label: 'Testing', color: 'text-blue-400', bg: 'bg-blue-950/30', border: 'border-blue-900/40', filter: (e: { status: string }) => e.status === 'testing' },
+  { label: 'Ideas', color: 'text-zinc-400', bg: 'bg-zinc-800/40', border: 'border-zinc-700/40', filter: (e: { status: string }) => e.status === 'idea' },
+  { label: 'Failed / Archived', color: 'text-red-400', bg: 'bg-red-950/20', border: 'border-red-900/30', filter: (e: { status: string }) => e.status === 'failed' || e.status === 'archived' },
 ]
 
-const needAttention = experiments.filter(
-  (e) =>
-    (e.status === 'validated' && e.decision === 'deepen') ||
-    (e.status === 'validated' && e.decision === 'industrialize') ||
-    e.status === 'paused'
-)
+export default async function DashboardPage() {
+  const [experiments, capabilities] = await Promise.all([getExperiments(), getCapabilities()])
 
-export default function DashboardPage() {
+  const statCards = STAT_META.map((m) => ({ ...m, value: experiments.filter(m.filter).length }))
+  const needAttention = experiments.filter(
+    (e) =>
+      (e.status === 'validated' && (e.decision === 'deepen' || e.decision === 'industrialize')) ||
+      e.status === 'paused'
+  )
   const recent = [...experiments]
     .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime())
     .slice(0, 5)
@@ -43,7 +44,7 @@ export default function DashboardPage() {
         <div>
           <h1 className="text-2xl font-bold text-zinc-100 tracking-tight">Overview</h1>
           <p className="text-sm text-zinc-500 mt-1">
-            Your R&D knowledge map — {experiments.length} experiments across {capabilities.length} capabilities
+            Your R&D knowledge map — {experiments.length} experiment{experiments.length !== 1 ? 's' : ''} across {capabilities.length} capability(ies)
           </p>
         </div>
         <Link

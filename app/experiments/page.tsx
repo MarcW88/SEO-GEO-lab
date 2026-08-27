@@ -1,18 +1,29 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import Link from 'next/link'
 import { Search, SlidersHorizontal } from 'lucide-react'
 import { StatusBadge, DecisionBadge, ValueStars } from '@/components/StatusBadge'
-import { experiments, capabilities } from '@/lib/data'
-import { STATUS_CONFIG, DECISION_CONFIG, STATUSES, formatDate, cn } from '@/lib/utils'
-import type { ExperimentStatus, ExperimentDecision } from '@/lib/types'
+import { STATUS_CONFIG, STATUSES, formatDate, cn } from '@/lib/utils'
+import type { ExperimentStatus, Experiment, Capability } from '@/lib/types'
 
 export default function ExperimentsPage() {
+  const [experiments, setExperiments] = useState<Experiment[]>([])
+  const [capabilities, setCapabilities] = useState<Capability[]>([])
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState<ExperimentStatus | 'all'>('all')
   const [capabilityFilter, setCapabilityFilter] = useState<string>('all')
   const [decisionFilter, setDecisionFilter] = useState<string>('all')
+
+  useEffect(() => {
+    fetch('/api/data')
+      .then((r) => r.json())
+      .then(({ experiments, capabilities }) => {
+        setExperiments(experiments ?? [])
+        setCapabilities(capabilities ?? [])
+      })
+      .catch(() => {})
+  }, [])
 
   const filtered = useMemo(() => {
     return experiments.filter((exp) => {

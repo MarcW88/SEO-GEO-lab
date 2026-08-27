@@ -4,8 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { LayoutDashboard, FlaskConical, Network, Beaker } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { experiments } from '@/lib/data'
-import { STATUS_CONFIG } from '@/lib/utils'
+import { useEffect, useState } from 'react'
 
 const navItems = [
   { href: '/', icon: LayoutDashboard, label: 'Overview' },
@@ -13,31 +12,32 @@ const navItems = [
   { href: '/map', icon: Network, label: 'Map' },
 ]
 
-const quickStats = [
-  {
-    label: 'total',
-    get: () => experiments.length,
-    color: 'text-zinc-400',
-  },
-  {
-    label: 'prod.',
-    get: () => experiments.filter((e) => e.status === 'production').length,
-    color: 'text-violet-400',
-  },
-  {
-    label: 'validated',
-    get: () => experiments.filter((e) => e.status === 'validated').length,
-    color: 'text-emerald-400',
-  },
-  {
-    label: 'testing',
-    get: () => experiments.filter((e) => e.status === 'testing').length,
-    color: 'text-blue-400',
-  },
-]
+interface Stats { total: number; prod: number; validated: number; testing: number }
 
 export default function TopNav() {
   const pathname = usePathname()
+  const [stats, setStats] = useState<Stats>({ total: 0, prod: 0, validated: 0, testing: 0 })
+
+  useEffect(() => {
+    fetch('/api/data')
+      .then((r) => r.json())
+      .then(({ experiments = [] }) => {
+        setStats({
+          total: experiments.length,
+          prod: experiments.filter((e: { status: string }) => e.status === 'production').length,
+          validated: experiments.filter((e: { status: string }) => e.status === 'validated').length,
+          testing: experiments.filter((e: { status: string }) => e.status === 'testing').length,
+        })
+      })
+      .catch(() => {})
+  }, [])
+
+  const quickStats = [
+    { label: 'total', value: stats.total, color: 'text-zinc-400' },
+    { label: 'prod.', value: stats.prod, color: 'text-violet-400' },
+    { label: 'validated', value: stats.validated, color: 'text-emerald-400' },
+    { label: 'testing', value: stats.testing, color: 'text-blue-400' },
+  ]
 
   return (
     <header className="border-b border-zinc-800/80 bg-zinc-950/95 backdrop-blur sticky top-0 z-50 shrink-0">
@@ -75,15 +75,12 @@ export default function TopNav() {
         </nav>
 
         <div className="ml-auto flex items-center gap-4">
-          {quickStats.map(({ label, get, color }) => {
-            const value = get()
-            return (
-              <div key={label} className="flex items-center gap-1.5">
-                <span className={cn('text-sm font-semibold tabular-nums', color)}>{value}</span>
-                <span className="text-xs text-zinc-600">{label}</span>
-              </div>
-            )
-          })}
+          {quickStats.map(({ label, value, color }) => (
+            <div key={label} className="flex items-center gap-1.5">
+              <span className={cn('text-sm font-semibold tabular-nums', color)}>{value}</span>
+              <span className="text-xs text-zinc-600">{label}</span>
+            </div>
+          ))}
         </div>
       </div>
     </header>
