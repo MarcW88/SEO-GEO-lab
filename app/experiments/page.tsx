@@ -40,7 +40,7 @@ export default function ExperimentsPage() {
         (decisionFilter === 'none' ? !exp.decision : exp.decision === decisionFilter)
       return matchesSearch && matchesStatus && matchesCap && matchesDecision
     })
-  }, [search, statusFilter, capabilityFilter, decisionFilter])
+  }, [experiments, search, statusFilter, capabilityFilter, decisionFilter])
 
   return (
     <div className="p-8 max-w-5xl mx-auto">
