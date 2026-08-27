@@ -27,11 +27,12 @@ export default function ExperimentsPage() {
 
   const filtered = useMemo(() => {
     return experiments.filter((exp) => {
+      const q = search.toLowerCase()
       const matchesSearch =
         !search ||
-        exp.name.toLowerCase().includes(search.toLowerCase()) ||
-        exp.question.toLowerCase().includes(search.toLowerCase()) ||
-        exp.tags.some((t) => t.toLowerCase().includes(search.toLowerCase()))
+        (exp.name ?? '').toLowerCase().includes(q) ||
+        (exp.question ?? '').toLowerCase().includes(q) ||
+        (exp.tags ?? []).some((t) => t.toLowerCase().includes(q))
       const matchesStatus = statusFilter === 'all' || exp.status === statusFilter
       const matchesCap = capabilityFilter === 'all' || exp.capability_id === capabilityFilter
       const matchesDecision =
@@ -47,7 +48,7 @@ export default function ExperimentsPage() {
         <div>
           <h1 className="text-2xl font-bold text-cyan-300 tracking-widest font-mono">SIMULATIONS</h1>
           <p className="text-xs text-cyan-800 mt-1 font-mono">
-            {filtered.length} of {experiments.length} programs active on the grid
+            {filtered.length} of {experiments.length} simulation{experiments.length !== 1 ? 's' : ''} in the Lab
           </p>
         </div>
       </div>
@@ -174,7 +175,7 @@ export default function ExperimentsPage() {
                     <td className="px-4 py-3">
                       <Link
                         href={`/experiments/${exp.id}`}
-                        className="text-sm font-medium text-zinc-200 group-hover:text-white hover:text-indigo-300 transition-colors line-clamp-1"
+                        className="text-sm font-medium text-zinc-200 group-hover:text-cyan-100 transition-colors line-clamp-1"
                       >
                         {exp.name}
                       </Link>
