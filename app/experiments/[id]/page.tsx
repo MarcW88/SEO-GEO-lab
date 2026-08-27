@@ -50,7 +50,7 @@ export default async function ExperimentDetailPage({ params }: Props) {
           className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-300 transition-colors mb-6"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
-          Experiments
+          Simulations
         </Link>
 
         <div className="flex items-start justify-between gap-4">
@@ -92,7 +92,7 @@ export default async function ExperimentDetailPage({ params }: Props) {
           {experiment.learnings.length > 0 && (
             <section className="bg-zinc-900/50 border border-zinc-800/60 rounded-xl p-5">
               <div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-4">
-                Learnings
+                Findings
               </div>
               <div className="space-y-3">
                 {experiment.learnings.map((l, i) => (
@@ -105,7 +105,7 @@ export default async function ExperimentDetailPage({ params }: Props) {
           {experiment.inputs.length > 0 && (
             <section className="bg-zinc-900/50 border border-zinc-800/60 rounded-xl p-5">
               <div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-3">
-                Inputs
+                Data Inputs
               </div>
               <div className="flex flex-wrap gap-2">
                 {experiment.inputs.map((input) => (
@@ -121,9 +121,9 @@ export default async function ExperimentDetailPage({ params }: Props) {
           )}
 
           {experiment.next_experiment && (
-            <section className="bg-indigo-950/30 border border-indigo-900/40 rounded-xl p-5">
-              <div className="text-xs font-semibold text-indigo-400 uppercase tracking-wider mb-2">
-                Next Experiment
+            <section className="bg-cyan-950/20 border border-cyan-900/30 rounded-xl p-5">
+              <div className="text-xs font-semibold text-cyan-600 uppercase tracking-wider mb-2 font-mono">
+                Next Move
               </div>
               <p className="text-sm text-zinc-200 leading-relaxed">{experiment.next_experiment}</p>
             </section>
@@ -132,7 +132,7 @@ export default async function ExperimentDetailPage({ params }: Props) {
           {relatedExperiments.length > 0 && (
             <section>
               <div className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-3">
-                Related Experiments
+                Linked Simulations
               </div>
               <div className="space-y-2">
                 {relatedExperiments.map((rel) => {

@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SEO / GEO Lab",
-  description: "R&D Knowledge Map — experiments, capabilities, pipelines",
+  title: "GRID — SEO / GEO Research System",
+  description: "SEO / GEO Research System — simulations, functions, the grid",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -24,7 +24,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="flex flex-col h-screen bg-[#09090b] text-zinc-100">
+      <body className="flex flex-col h-screen bg-[#050508] text-[#cff5ff]">
         <TopNav />
         <main className="flex-1 overflow-y-auto min-h-0">{children}</main>
       </body>

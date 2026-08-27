@@ -8,8 +8,8 @@ const MapView = dynamic(() => import('@/components/MapView'), {
   loading: () => (
     <div className="w-full h-full flex items-center justify-center">
       <div className="flex flex-col items-center gap-3 text-zinc-600">
-        <Network className="w-8 h-8 animate-pulse" />
-        <span className="text-sm">Loading map…</span>
+        <Network className="w-8 h-8 animate-pulse text-cyan-700" />
+        <span className="text-sm text-cyan-700 font-mono tracking-wider">Initializing Grid…</span>
       </div>
     </div>
   ),
@@ -18,25 +18,25 @@ const MapView = dynamic(() => import('@/components/MapView'), {
 export default function MapPage() {
   return (
     <div className="flex flex-col h-full">
-      <div className="px-6 py-4 border-b border-zinc-800/60 flex items-center justify-between shrink-0">
+      <div className="px-6 py-4 border-b border-cyan-900/25 flex items-center justify-between shrink-0" style={{ boxShadow: '0 1px 0 rgba(34,211,238,0.04)' }}>
         <div>
-          <h1 className="text-base font-semibold text-zinc-100 tracking-tight">Map</h1>
-          <p className="text-xs text-zinc-600 mt-0.5">
-            Tools → Experiments → Capabilities — drag to rearrange, scroll to zoom
+          <h1 className="text-base font-bold text-cyan-300 tracking-widest font-mono">THE GRID</h1>
+          <p className="text-xs text-cyan-800 mt-0.5 font-mono">
+            Programs → Simulations → Functions — drag to rearrange, scroll to zoom
           </p>
         </div>
-        <div className="flex items-center gap-4 text-xs text-zinc-600">
+        <div className="flex items-center gap-4 text-xs text-cyan-800 font-mono">
           <div className="flex items-center gap-1.5">
-            <div className="w-3 h-3 rounded-sm bg-amber-950/60 border border-amber-900/60" />
-            Tool
+            <div className="w-3 h-3 rounded-sm" style={{ background: 'rgba(217,119,6,0.2)', border: '1px solid rgba(217,119,6,0.4)' }} />
+            Program
           </div>
           <div className="flex items-center gap-1.5">
-            <div className="w-3 h-3 rounded-sm bg-emerald-950/60 border border-emerald-900/60" />
-            Experiment
+            <div className="w-3 h-3 rounded-sm" style={{ background: 'rgba(34,211,238,0.1)', border: '1px solid rgba(34,211,238,0.3)' }} />
+            Simulation
           </div>
           <div className="flex items-center gap-1.5">
-            <div className="w-3 h-3 rounded-sm bg-blue-950/40 border border-blue-800/40" />
-            Capability
+            <div className="w-3 h-3 rounded-sm" style={{ background: 'rgba(167,139,250,0.15)', border: '1px solid rgba(167,139,250,0.35)' }} />
+            Function
           </div>
         </div>
       </div>

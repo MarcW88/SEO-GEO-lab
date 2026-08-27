@@ -23,53 +23,53 @@ export const STATUS_CONFIG: Record<
   { label: string; color: string; bg: string; border: string; icon: string }
 > = {
   idea: {
-    label: 'Idea',
+    label: 'Initialized',
     color: 'text-zinc-400',
     bg: 'bg-zinc-800/60',
     border: 'border-zinc-700',
-    icon: '💡',
+    icon: '○',
   },
   testing: {
-    label: 'Testing',
-    color: 'text-blue-400',
-    bg: 'bg-blue-950/60',
-    border: 'border-blue-900',
-    icon: '🧪',
+    label: 'Running',
+    color: 'text-cyan-400',
+    bg: 'bg-cyan-950/60',
+    border: 'border-cyan-900',
+    icon: '◉',
   },
   validated: {
     label: 'Validated',
     color: 'text-emerald-400',
     bg: 'bg-emerald-950/60',
     border: 'border-emerald-900',
-    icon: '✅',
+    icon: '◆',
   },
   production: {
-    label: 'Production',
+    label: 'Deployed',
     color: 'text-violet-400',
     bg: 'bg-violet-950/60',
     border: 'border-violet-900',
-    icon: '⚙️',
+    icon: '⬡',
   },
   failed: {
-    label: 'Failed',
+    label: 'Derezzed',
     color: 'text-red-400',
     bg: 'bg-red-950/60',
     border: 'border-red-900',
-    icon: '❌',
+    icon: '✕',
   },
   paused: {
-    label: 'Paused',
+    label: 'Suspended',
     color: 'text-amber-400',
     bg: 'bg-amber-950/60',
     border: 'border-amber-900',
-    icon: '🧊',
+    icon: '◫',
   },
   archived: {
     label: 'Archived',
     color: 'text-zinc-500',
     bg: 'bg-zinc-900/60',
     border: 'border-zinc-800',
-    icon: '🗑',
+    icon: '▽',
   },
 }
 
@@ -79,14 +79,10 @@ export const DECISION_CONFIG: Record<
 > = {
   keep: { label: 'Keep', color: 'text-zinc-300', bg: 'bg-zinc-800' },
   deepen: { label: 'Deepen', color: 'text-cyan-400', bg: 'bg-cyan-950' },
-  industrialize: {
-    label: 'Industrialize',
-    color: 'text-violet-400',
-    bg: 'bg-violet-950',
-  },
+  industrialize: { label: 'Deploy', color: 'text-violet-400', bg: 'bg-violet-950' },
   merge: { label: 'Merge', color: 'text-amber-400', bg: 'bg-amber-950' },
   replace: { label: 'Replace', color: 'text-orange-400', bg: 'bg-orange-950' },
-  kill: { label: 'Kill', color: 'text-red-400', bg: 'bg-red-950' },
+  kill: { label: 'Derez', color: 'text-red-400', bg: 'bg-red-950' },
 }
 
 export const STATUSES: ExperimentStatus[] = [

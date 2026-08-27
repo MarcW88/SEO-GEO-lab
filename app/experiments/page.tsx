@@ -45,9 +45,9 @@ export default function ExperimentsPage() {
     <div className="p-8 max-w-5xl mx-auto">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-zinc-100 tracking-tight">Experiments</h1>
-          <p className="text-sm text-zinc-500 mt-1">
-            {filtered.length} of {experiments.length} experiments
+          <h1 className="text-2xl font-bold text-cyan-300 tracking-widest font-mono">SIMULATIONS</h1>
+          <p className="text-xs text-cyan-800 mt-1 font-mono">
+            {filtered.length} of {experiments.length} programs active on the grid
           </p>
         </div>
       </div>
@@ -57,10 +57,10 @@ export default function ExperimentsPage() {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
           <input
             type="text"
-            placeholder="Search experiments, questions, tags…"
+            placeholder="Scan simulations, hypotheses, tags…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-zinc-900 border border-zinc-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/20 transition-all"
+            className="w-full bg-zinc-900/60 border border-zinc-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-zinc-200 placeholder:text-zinc-600 focus:outline-none focus:border-cyan-800/50 focus:ring-1 focus:ring-cyan-900/30 transition-all"
           />
         </div>
 
@@ -110,7 +110,7 @@ export default function ExperimentsPage() {
                   : 'bg-zinc-900 text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800'
               )}
             >
-              All caps.
+              All functions
             </button>
             {capabilities.map((cap) => (
               <button

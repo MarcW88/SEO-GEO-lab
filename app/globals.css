@@ -1,15 +1,15 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-background: #09090b;
-  --color-foreground: #fafafa;
+  --color-background: #050508;
+  --color-foreground: #cff5ff;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 :root {
-  --background: #09090b;
-  --foreground: #fafafa;
+  --background: #050508;
+  --foreground: #cff5ff;
 }
 
 body {
@@ -17,21 +17,45 @@ body {
   color: var(--foreground);
 }
 
+/* TRON grid overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(34, 211, 238, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.022) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: #050508; }
+::-webkit-scrollbar-thumb { background: rgba(34, 211, 238, 0.15); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(34, 211, 238, 0.3); }
+
+/* React Flow — TRON */
 .react-flow__controls-button {
-  background: #18181b;
-  border-color: #27272a;
-  color: #a1a1aa;
-  fill: #a1a1aa;
+  background: #08080d;
+  border-color: rgba(34, 211, 238, 0.18);
+  color: #22d3ee;
+  fill: #22d3ee;
 }
 
 .react-flow__controls-button:hover {
-  background: #27272a;
+  background: rgba(34, 211, 238, 0.07);
 }
 
 .react-flow__panel {
-  color: #a1a1aa;
+  color: rgba(34, 211, 238, 0.4);
 }
 
 .react-flow__attribution {
   display: none;
+}
+
+.react-flow__edge-path {
+  filter: drop-shadow(0 0 2px rgba(34, 211, 238, 0.3));
 }
