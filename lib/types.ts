@@ -37,6 +37,8 @@ export interface Experiment {
   related_ids: string[]
   next_experiment?: string
   tags: string[]
+  linkedin_url?: string
+  linkedin_label?: string
   created_at: string
   updated_at: string
 }
