@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowLeft, ExternalLink, Ticket, ChevronRight, AlertTriangle, CheckCircle, XCircle } from 'lucide-react'
+import { ArrowLeft, ExternalLink, ChevronRight, AlertTriangle, CheckCircle, XCircle } from 'lucide-react'
+import CreateTicketButton from '@/components/CreateTicketButton'
 import { StatusBadge, DecisionBadge, ValueStars } from '@/components/StatusBadge'
 import { getExperiment, getCapabilities, getTools } from '@/lib/db'
 import { formatDate, cn } from '@/lib/utils'
@@ -73,10 +74,11 @@ export default async function ExperimentDetailPage({ params }: Props) {
               {experiment.name}
             </h1>
           </div>
-          <button className="flex items-center gap-2 px-4 py-2 bg-zinc-900 border border-zinc-700 hover:border-zinc-600 text-zinc-300 hover:text-white text-sm font-medium rounded-lg transition-all shrink-0">
-            <Ticket className="w-4 h-4" />
-            Create ticket
-          </button>
+          <CreateTicketButton
+            defaultTitle={experiment.name}
+            defaultDescription={experiment.question}
+            defaultTags={experiment.tags}
+          />
         </div>
       </div>
 
