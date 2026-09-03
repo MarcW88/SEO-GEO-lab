@@ -2,13 +2,14 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { LayoutDashboard, FlaskConical, Network, Cpu, Zap } from 'lucide-react'
+import { LayoutDashboard, FlaskConical, Network, Cpu, Zap, Target } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useEffect, useState } from 'react'
 
 const navItems = [
   { href: '/', icon: LayoutDashboard, label: 'Control Room' },
   { href: '/experiments', icon: FlaskConical, label: 'Simulations' },
+  { href: '/focus', icon: Target, label: 'Focus' },
   { href: '/simulate', icon: Zap, label: 'Simulate' },
   { href: '/map', icon: Network, label: 'The Grid' },
 ]
