@@ -181,6 +181,46 @@ const TOOLS = [
     inputSchema: { type: 'object', properties: {} },
   },
   {
+    name: 'get_simulation',
+    description: 'Get full details of a specific simulation by name or ID, including learnings, status, value, decision, and next steps.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        id: { type: 'string', description: 'Experiment ID' },
+        name: { type: 'string', description: 'Experiment name (partial match)' },
+      },
+    },
+  },
+  {
+    name: 'get_focus_list',
+    description: 'Get a prioritized list of simulations to work on, sorted by impact score (value × maturity gap × status factor). Use this to know what to do next.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        limit: { type: 'number', description: 'Max simulations to return. Default: 10' },
+      },
+    },
+  },
+  {
+    name: 'create_ticket',
+    description: 'Create a ticket in Quest Log from a simulation. Pre-fills title and description from the simulation data.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        simulation_id: { type: 'string', description: 'Experiment ID to base the ticket on (required)' },
+        title: { type: 'string', description: 'Override the ticket title (default: simulation name)' },
+        description: { type: 'string', description: 'Override ticket description (default: simulation question + learnings)' },
+        client: { type: 'string', description: 'Client name' },
+        risk: {
+          type: 'string',
+          enum: ['low', 'medium', 'high', 'critical'],
+          description: 'Priority level. Default: medium',
+        },
+      },
+      required: ['simulation_id'],
+    },
+  },
+  {
     name: 'add_relation',
     description: 'Add a typed relation between two entities (experiment, capability, or tool).',
     inputSchema: {
@@ -416,6 +456,154 @@ async function handleAddRelation(args: Record<string, unknown>): Promise<string>
   return `✅ Relation added!\n**${relation.source_id}** –[${relation.relation_type}]→ **${relation.target_id}**`
 }
 
+async function handleGetSimulation(args: Record<string, unknown>): Promise<string> {
+  const sb = getSupabase()
+  if (!sb) return '❌ Supabase not configured.'
+
+  let exp: Experiment | null = null
+
+  if (args.id) {
+    const { data } = await sb.from('experiments').select('data').eq('id', args.id as string).single()
+    exp = data?.data ?? null
+  } else if (args.name) {
+    const { data } = await sb.from('experiments').select('data')
+    const all = (data ?? []).map((r: { data: Experiment }) => r.data)
+    const q = (args.name as string).toLowerCase()
+    exp = all.find((e: Experiment) => e.name.toLowerCase().includes(q)) ?? null
+  }
+
+  if (!exp) return '❌ Simulation not found. Use list_experiments to browse available IDs.'
+
+  const lines = [
+    `# ${exp.name}`,
+    `**ID:** ${exp.id}`,
+    `**Status:** ${exp.status}${exp.decision ? ` → decision: ${exp.decision}` : ''}`,
+    `**Value:** ${'★'.repeat(exp.value)}${'☆'.repeat(5 - exp.value)} (${exp.value}/5)`,
+    `**Maturity:** ${'●'.repeat(exp.maturity)}${'○'.repeat(5 - exp.maturity)} (${exp.maturity}/5)`,
+    ``,
+    `**Question:** ${exp.question}`,
+  ]
+
+  if (exp.learnings?.length) {
+    lines.push(``, `**Learnings:**`)
+    for (const l of exp.learnings) {
+      const icon = l.type === 'finding' ? '✅' : l.type === 'warning' ? '⚠️' : '❌'
+      lines.push(`${icon} ${l.text}`)
+    }
+  }
+
+  if (exp.next_experiment) lines.push(``, `**Next step:** ${exp.next_experiment}`)
+  if (exp.tags?.length) lines.push(`**Tags:** ${exp.tags.map(t => `#${t}`).join(' ')}`)
+  if (exp.clients?.length) lines.push(`**Clients tested:** ${exp.clients.join(', ')}`)
+
+  return lines.join('\n')
+}
+
+const STATUS_FACTOR: Record<string, number> = {
+  testing: 1.5, validated: 1.3, idea: 1.0, paused: 0.6,
+  production: 0.3, failed: 0.1, archived: 0,
+}
+const DECISION_BONUS: Record<string, number> = {
+  industrialize: 20, deepen: 15, keep: 5, merge: 3, replace: -5, kill: -20,
+}
+
+async function handleGetFocusList(args: Record<string, unknown>): Promise<string> {
+  const sb = getSupabase()
+  if (!sb) return '❌ Supabase not configured.'
+
+  const limit = Math.min((args.limit as number) ?? 10, 30)
+  const { data, error } = await sb.from('experiments').select('data')
+  if (error) return `❌ ${error.message}`
+  if (!data?.length) return 'No simulations yet.'
+
+  const exps = data.map((r: { data: Experiment }) => r.data)
+
+  const scored = exps
+    .filter((e: Experiment) => !['archived', 'failed'].includes(e.status) || e.decision !== 'kill')
+    .map((e: Experiment) => ({
+      exp: e,
+      score: Math.round((e.value * (6 - e.maturity) * (STATUS_FACTOR[e.status] ?? 1)) + (e.decision ? (DECISION_BONUS[e.decision] ?? 0) : 0)),
+    }))
+    .sort((a: { score: number }, b: { score: number }) => b.score - a.score)
+    .slice(0, limit)
+
+  const lines = [
+    `# Focus List — Top ${scored.length} simulations by priority score`,
+    ``,
+  ]
+
+  scored.forEach(({ exp, score }: { exp: Experiment; score: number }, i: number) => {
+    lines.push(`**${i + 1}. ${exp.name}** (score: ${score})`)
+    lines.push(`   Status: ${exp.status}${exp.decision ? ` | Decision: ${exp.decision}` : ''} | Value: ${exp.value}/5 | Maturity: ${exp.maturity}/5`)
+    if (exp.next_experiment) lines.push(`   → Next: ${exp.next_experiment}`)
+    lines.push(`   ID: \`${exp.id}\``)
+    lines.push(``)
+  })
+
+  return lines.join('\n')
+}
+
+async function handleCreateTicket(args: Record<string, unknown>): Promise<string> {
+  const sb = getSupabase()
+  if (!sb) return '❌ Supabase not configured.'
+
+  const simId = (args.simulation_id as string)?.trim()
+  if (!simId) return '❌ simulation_id is required.'
+
+  const { data: row } = await sb.from('experiments').select('data').eq('id', simId).single()
+  const exp: Experiment | null = row?.data ?? null
+  if (!exp) return `❌ Simulation "${simId}" not found.`
+
+  const ticketingUrl = process.env.TICKETING_URL
+  const apiKey = process.env.TICKETING_API_KEY
+  const bypass = process.env.TICKETING_BYPASS_TOKEN
+
+  if (!ticketingUrl || !apiKey) return '❌ TICKETING_URL / TICKETING_API_KEY not configured.'
+
+  const defaultDesc = [
+    exp.question,
+    exp.learnings?.length
+      ? `\nLearnings:\n${exp.learnings.map(l => `${l.type === 'finding' ? '✅' : l.type === 'warning' ? '⚠️' : '❌'} ${l.text}`).join('\n')}`
+      : '',
+    exp.next_experiment ? `\nNext step: ${exp.next_experiment}` : '',
+  ].join('').trim()
+
+  const risk = (args.risk as string) ?? 'medium'
+  const payload = {
+    title: (args.title as string) || exp.name,
+    description: (args.description as string) || defaultDesc,
+    client: (args.client as string) || undefined,
+    risk,
+    tags: exp.tags ?? [],
+  }
+
+  let res: Response
+  try {
+    res = await fetch(`${ticketingUrl}/api/tickets`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Api-Key': apiKey,
+        ...(bypass ? { 'x-vercel-protection-bypass': bypass } : {}),
+      },
+      body: JSON.stringify(payload),
+    })
+  } catch (err) {
+    return `❌ Cannot reach ticketing app: ${err instanceof Error ? err.message : String(err)}`
+  }
+
+  const result = await res.json().catch(() => ({ error: `HTTP ${res.status}` }))
+  if (!res.ok) return `❌ Ticket creation failed: ${typeof result.error === 'string' ? result.error : `HTTP ${res.status}`}`
+
+  return [
+    `✅ Ticket created in Quest Log!`,
+    `**Title:** ${payload.title}`,
+    `**Priority:** ${risk}`,
+    `**ID:** ${result.id}`,
+    payload.client ? `**Client:** ${payload.client}` : null,
+  ].filter(Boolean).join('\n')
+}
+
 // ── Route handlers ────────────────────────────────────────────────────────────
 
 export async function OPTIONS() {
@@ -499,6 +687,9 @@ export async function POST(req: NextRequest) {
       else if (name === 'list_capabilities') result = await handleListCapabilities()
       else if (name === 'add_tool') result = await handleAddTool(args)
       else if (name === 'list_tools') result = await handleListTools()
+      else if (name === 'get_simulation') result = await handleGetSimulation(args)
+      else if (name === 'get_focus_list') result = await handleGetFocusList(args)
+      else if (name === 'create_ticket') result = await handleCreateTicket(args)
       else if (name === 'add_relation') result = await handleAddRelation(args)
       else return rpc(id, { content: [{ type: 'text', text: `Unknown tool: ${name}` }], isError: true })
 
