@@ -13,12 +13,17 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
-  const res = await fetch(`${ticketingUrl}/api/tickets`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "X-Api-Key": apiKey },
-    body: JSON.stringify(body),
-  });
+  let res: Response;
+  try {
+    res = await fetch(`${ticketingUrl}/api/tickets`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-Api-Key": apiKey },
+      body: JSON.stringify(body),
+    });
+  } catch (err) {
+    return NextResponse.json({ error: `Cannot reach ticketing app: ${err instanceof Error ? err.message : String(err)}` }, { status: 502 });
+  }
 
-  const data = await res.json();
+  const data = await res.json().catch(() => ({ error: `Ticketing app returned HTTP ${res.status}` }));
   return NextResponse.json(data, { status: res.status });
 }

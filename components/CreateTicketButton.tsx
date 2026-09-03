@@ -52,8 +52,13 @@ export default function CreateTicketButton({ defaultTitle = '', defaultDescripti
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title, description, client, risk, tags: defaultTags }),
       })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.error ?? 'Failed to create ticket')
+      const data = await res.json().catch(() => ({ error: `HTTP ${res.status}` }))
+      if (!res.ok) {
+        const msg = typeof data.error === 'string' ? data.error
+          : typeof data.message === 'string' ? data.message
+          : `HTTP ${res.status}`
+        throw new Error(msg)
+      }
       setSuccess(true)
       setTimeout(() => { setOpen(false); reset() }, 1800)
     } catch (err) {
