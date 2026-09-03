@@ -13,11 +13,17 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
   }
 
+  const bypassToken = process.env.TICKETING_BYPASS_TOKEN;
+
   let res: Response;
   try {
     res = await fetch(`${ticketingUrl}/api/tickets`, {
       method: "POST",
-      headers: { "Content-Type": "application/json", "X-Api-Key": apiKey },
+      headers: {
+        "Content-Type": "application/json",
+        "X-Api-Key": apiKey,
+        ...(bypassToken ? { "x-vercel-protection-bypass": bypassToken } : {}),
+      },
       body: JSON.stringify(body),
     });
   } catch (err) {
