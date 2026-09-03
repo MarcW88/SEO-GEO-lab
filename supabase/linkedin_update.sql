@@ -1,22 +1,20 @@
 -- ─── LinkedIn Sources — UPDATE experiments by name ────────────────────────────
 -- Run this in the Supabase SQL Editor.
--- Replace each URL placeholder with the actual LinkedIn post URL.
--- Labels are pre-filled based on your table.
 
 -- 1. Nao SEO/GEO Analytics Agent POC
---    Source: Nao Labs sur LinkedIn + Post de lancement – Claire Gouze
+--    Source: Post de lancement Open Source Analytics Agent — Claire Gouze (Feb 2026)
 UPDATE experiments
 SET data = data || jsonb_build_object(
-  'linkedin_url',   'https://www.linkedin.com/company/getnao-io/',
-  'linkedin_label', 'Nao Labs — Post de lancement · Claire Gouze'
+  'linkedin_url',   'https://www.linkedin.com/posts/claire-gouze_were-launching-the-first-open-source-activity-7426897807686696961--ifQ',
+  'linkedin_label', 'Nao Labs — Open Source Analytics Agent · Claire Gouze'
 )
 WHERE data->>'name' = 'Nao SEO/GEO Analytics Agent POC';
 
 -- 2. Semantica v0.6.0 – Connected Data (4 simulations)
---    → Replace URL below with the exact LinkedIn post URL if you have it
+--    Source: Connected Data World post on Semantica v0.6.0 (Jul 2026)
 UPDATE experiments
 SET data = data || jsonb_build_object(
-  'linkedin_url',   'https://www.linkedin.com/posts/semantica-ai_semantica-v060-connected-data-activity',
+  'linkedin_url',   'https://www.linkedin.com/posts/connecteddataworld_opensource-enterpriseai-knowledgegraphs-activity-7486005461947834368-qZhl',
   'linkedin_label', 'Semantica v0.6.0 — Connected Data'
 )
 WHERE data->>'name' IN (
@@ -27,9 +25,10 @@ WHERE data->>'name' IN (
 );
 
 -- 3. Finchling / Trending Digital PR – Mark Williams-Cook (3 simulations)
+--    Source: Post Finchling Trending PR Campaigns — Mark Williams-Cook (Aug 2026)
 UPDATE experiments
 SET data = data || jsonb_build_object(
-  'linkedin_url',   'https://www.linkedin.com/in/markwilliamscook/',
+  'linkedin_url',   'https://www.linkedin.com/posts/markseo_seo-activity-7491136040523526147-hY5t',
   'linkedin_label', 'Finchling / Trending Digital PR — Mark Williams-Cook'
 )
 WHERE data->>'name' IN (
@@ -38,11 +37,12 @@ WHERE data->>'name' IN (
   'Earned Media → AI Visibility Correlation'
 );
 
--- 4. AirOps – AI Search Technical Checklist + Jairo Guerrero (2 simulations)
+-- 4. AirOps – Tech SEO for AI Search + Jairo Guerrero (2 simulations)
+--    Source: Post webinar "Tech SEO for AI search" × AirOps — Jairo Guerrero (Jul 2026)
 UPDATE experiments
 SET data = data || jsonb_build_object(
-  'linkedin_url',   'https://www.linkedin.com/in/jairoguerrero/',
-  'linkedin_label', 'AirOps — AI Search Technical Checklist · Jairo Guerrero'
+  'linkedin_url',   'https://www.linkedin.com/posts/jdguerrerovasquez_not-me-before-my-webinar-on-tech-seo-for-activity-7480945389332959232-TDhU',
+  'linkedin_label', 'Tech SEO for AI Search — Jairo Guerrero × AirOps'
 )
 WHERE data->>'name' IN (
   'Search Grounding vs Live Fetch Citation Test',
@@ -50,9 +50,10 @@ WHERE data->>'name' IN (
 );
 
 -- 5. Perception Graph – Andrea Volpini (2 simulations)
+--    Source: Post "AI rebuilds knowledge from structure" — Andrea Volpini (Jul 2026)
 UPDATE experiments
 SET data = data || jsonb_build_object(
-  'linkedin_url',   'https://www.linkedin.com/in/andreavolpini/',
+  'linkedin_url',   'https://www.linkedin.com/posts/volpini_ai-doesnt-read-your-documentation-it-builds-activity-7488902794280685568-mk7X',
   'linkedin_label', 'Perception Graph — Andrea Volpini'
 )
 WHERE data->>'name' IN (
