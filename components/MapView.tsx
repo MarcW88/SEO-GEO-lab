@@ -23,7 +23,7 @@ import type { Experiment, Capability, Tool, ExperimentStatus } from '@/lib/types
 
 function ExperimentNode({ data }: NodeProps) {
   const { label, status, decision } = data as { label: string; status: ExperimentStatus; decision: string | null }
-  const cfg = STATUS_CONFIG[status]
+  const cfg = STATUS_CONFIG[status] ?? STATUS_CONFIG.idea
   const handleStyle = { background: '#22d3ee', border: 'none', width: 7, height: 7, boxShadow: '0 0 6px #22d3ee80' }
   return (
     <div
@@ -265,9 +265,20 @@ export default function MapView() {
   const [showCaps,     setShowCaps]     = useState(true)
   const [statusFilter, setStatusFilter] = useState('all')
   const [showLabels,   setShowLabels]   = useState(true)
+  const [loadError,    setLoadError]    = useState<string | null>(null)
 
   useEffect(() => {
-    fetch('/api/data').then(r => r.json()).then(setRawData).catch(() => {})
+    fetch('/api/data', { cache: 'no-store' })
+      .then(async r => {
+        const body = await r.json()
+        if (!r.ok) throw new Error(body.error ?? 'Unable to load the Grid')
+        return body
+      })
+      .then(data => {
+        setRawData(data)
+        setLoadError(null)
+      })
+      .catch(error => setLoadError(error instanceof Error ? error.message : 'Unable to load the Grid'))
   }, [])
 
   const counts = useMemo(() => ({
@@ -278,6 +289,12 @@ export default function MapView() {
 
   return (
     <div className="flex flex-col h-full">
+
+      {loadError && (
+        <div role="alert" className="mx-4 mt-3 rounded-lg border border-red-900/50 bg-red-950/30 px-3 py-2 text-xs text-red-300 font-mono">
+          {loadError} Refresh the page or check the Supabase environment variables in Vercel.
+        </div>
+      )}
 
       {/* ── Filter bar ── */}
       <div

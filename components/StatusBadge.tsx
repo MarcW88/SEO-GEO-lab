@@ -7,7 +7,7 @@ interface StatusBadgeProps {
 }
 
 export function StatusBadge({ status, className }: StatusBadgeProps) {
-  const cfg = STATUS_CONFIG[status]
+  const cfg = STATUS_CONFIG[status] ?? STATUS_CONFIG.idea
   return (
     <span
       className={cn(
@@ -32,6 +32,7 @@ interface DecisionBadgeProps {
 export function DecisionBadge({ decision, className }: DecisionBadgeProps) {
   if (!decision) return null
   const cfg = DECISION_CONFIG[decision]
+  if (!cfg) return null
   return (
     <span
       className={cn(
