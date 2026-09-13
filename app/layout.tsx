@@ -14,17 +14,17 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GRID — SEO / GEO Research System",
-  description: "SEO / GEO Research System — simulations, functions, the grid",
+  title: "SEO / GEO Lab — SEO Tools Hub",
+  description: "Laboratoire de recherche SEO et GEO — expériences, capacités et outils.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="en"
+      lang="fr"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="flex flex-col h-screen bg-[#050508] text-[#cff5ff]">
+      <body className="flex flex-col h-screen bg-[#0B0D12] text-[#E9EAF2]">
         <TopNav />
         <main className="flex-1 overflow-y-auto min-h-0">{children}</main>
       </body>

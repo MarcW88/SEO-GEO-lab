@@ -18,9 +18,9 @@ const MapView = dynamic(() => import('@/components/MapView'), {
 export default function MapPage() {
   return (
     <div className="flex flex-col h-full">
-      <div className="px-6 py-3 border-b border-cyan-900/25 flex items-center justify-between shrink-0" style={{ boxShadow: '0 1px 0 rgba(34,211,238,0.04)' }}>
+      <div className="px-6 py-3 border-b border-cyan-900/25 flex items-center justify-between shrink-0" style={{ boxShadow: '0 1px 0 rgba(99,102,241,0.04)' }}>
         <div>
-          <h1 className="text-base font-bold text-cyan-300 tracking-widest font-mono">THE GRID</h1>
+          <h1 className="text-base font-bold text-cyan-300 tracking-widest font-mono">CARTOGRAPHIE</h1>
           <p className="text-xs text-cyan-800 mt-0.5 font-mono">
             Knowledge graph — established programs, simulations and functions
           </p>

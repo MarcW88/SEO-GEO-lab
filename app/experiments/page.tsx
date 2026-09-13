@@ -46,7 +46,7 @@ export default function ExperimentsPage() {
     <div className="p-8 max-w-5xl mx-auto">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-cyan-300 tracking-widest font-mono">SIMULATIONS</h1>
+          <h1 className="text-2xl font-bold text-cyan-300 tracking-widest font-mono">EXPÉRIENCES</h1>
           <p className="text-xs text-cyan-800 mt-1 font-mono">
             {filtered.length} of {experiments.length} simulation{experiments.length !== 1 ? 's' : ''} in the Lab
           </p>

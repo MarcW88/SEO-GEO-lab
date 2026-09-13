@@ -1,55 +1,71 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-background: #050508;
-  --color-foreground: #cff5ff;
+  --color-background: #0B0D12;
+  --color-foreground: #E9EAF2;
+  --color-cyan-50: #EEF2FF;
+  --color-cyan-100: #E0E7FF;
+  --color-cyan-200: #C7D2FE;
+  --color-cyan-300: #A5B4FC;
+  --color-cyan-400: #818CF8;
+  --color-cyan-500: #6366F1;
+  --color-cyan-600: #6366F1;
+  --color-cyan-700: #4F46E5;
+  --color-cyan-800: #4338CA;
+  --color-cyan-900: #312E81;
+  --color-cyan-950: #1E1B4B;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 :root {
-  --background: #050508;
-  --foreground: #cff5ff;
+  color-scheme: dark;
+  --background: #0B0D12;
+  --foreground: #E9EAF2;
+  --surface: #14161F;
+  --surface-2: #1A1D28;
+  --border: #272A37;
+  --accent: #6366F1;
+  --text-muted: #8B90A7;
+  --text-dim: #4B5068;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
 }
 
-/* TRON grid overlay */
+/* Subtle ambient background */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image:
-    linear-gradient(rgba(34, 211, 238, 0.022) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(34, 211, 238, 0.022) 1px, transparent 1px);
-  background-size: 48px 48px;
+  background: radial-gradient(ellipse at 75% 0%, rgba(99, 102, 241, 0.07), transparent 42%);
   pointer-events: none;
   z-index: 0;
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 5px; height: 5px; }
-::-webkit-scrollbar-track { background: #050508; }
-::-webkit-scrollbar-thumb { background: rgba(34, 211, 238, 0.15); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(34, 211, 238, 0.3); }
+::-webkit-scrollbar-track { background: #0B0D12; }
+::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.24); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.42); }
 
-/* React Flow — TRON */
+/* React Flow controls */
 .react-flow__controls-button {
-  background: #08080d;
-  border-color: rgba(34, 211, 238, 0.18);
-  color: #22d3ee;
-  fill: #22d3ee;
+  background: #14161F;
+  border-color: #272A37;
+  color: #818CF8;
+  fill: #818CF8;
 }
 
 .react-flow__controls-button:hover {
-  background: rgba(34, 211, 238, 0.07);
+  background: rgba(99, 102, 241, 0.12);
 }
 
 .react-flow__panel {
-  color: rgba(34, 211, 238, 0.4);
+  color: rgba(139, 144, 167, 0.7);
 }
 
 .react-flow__attribution {
@@ -57,5 +73,5 @@ body::before {
 }
 
 .react-flow__edge-path {
-  filter: drop-shadow(0 0 2px rgba(34, 211, 238, 0.3));
+  filter: none;
 }

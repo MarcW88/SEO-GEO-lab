@@ -23,10 +23,10 @@ import { Search, Save, Trash2, Zap, Plus, X, FlaskConical } from 'lucide-react'
 import { cn, STATUS_CONFIG } from '@/lib/utils'
 import type { Experiment, Capability, Tool, ExperimentStatus } from '@/lib/types'
 
-// ─── TRON edge colours ────────────────────────────────────────────────────────
+// ─── Graph edge colours ───────────────────────────────────────────────────────
 
 const EDGE_COLORS: Record<string, string> = {
-  feeds: '#22d3ee',
+  feeds: '#6366F1',
   enables: '#10b981',
   validates: '#34d399',
   extends: '#06b6d4',
@@ -52,7 +52,7 @@ function SimExpNode({ data }: NodeProps) {
     label: string; status: ExperimentStatus; decision?: string
   }
   const cfg = STATUS_CONFIG[status] ?? STATUS_CONFIG.idea
-  const hs = { background: '#22d3ee', border: 'none', width: 7, height: 7, boxShadow: '0 0 6px #22d3ee80' }
+  const hs = { background: '#6366F1', border: 'none', width: 7, height: 7, boxShadow: '0 0 6px #6366F180' }
   return (
     <div
       className={`px-3 py-2 rounded-lg border min-w-[150px] max-w-[200px] ${cfg.bg} ${cfg.border}`}
@@ -62,7 +62,7 @@ function SimExpNode({ data }: NodeProps) {
       <div className={`text-[10px] font-mono font-medium mb-1 ${cfg.color}`}>
         {cfg.icon} {cfg.label.toUpperCase()}
       </div>
-      <div className="text-[12px] font-semibold text-[#cff5ff] leading-snug">{label}</div>
+      <div className="text-[12px] font-semibold text-[#E9EAF2] leading-snug">{label}</div>
       {decision && (
         <div className="mt-1 text-[9px] font-bold uppercase tracking-wider text-cyan-800 font-mono">
           → {decision}
@@ -83,7 +83,7 @@ function SimToolNode({ data }: NodeProps) {
     >
       <Handle type="target" position={Position.Left} style={hs} />
       <div className="text-[10px] font-mono font-medium text-amber-500/80 mb-1 uppercase tracking-wider">⬡ Program</div>
-      <div className="text-[12px] font-semibold text-[#cff5ff]">{label}</div>
+      <div className="text-[12px] font-semibold text-[#E9EAF2]">{label}</div>
       <Handle type="source" position={Position.Right} style={hs} />
     </div>
   )
@@ -102,7 +102,7 @@ function SimCapNode({ data }: NodeProps) {
       <div className="text-[10px] font-mono font-medium mb-1 uppercase tracking-wider" style={{ color: c }}>
         ◈ Function
       </div>
-      <div className="text-[12px] font-semibold text-[#cff5ff]">{label}</div>
+      <div className="text-[12px] font-semibold text-[#E9EAF2]">{label}</div>
       <Handle type="source" position={Position.Right} style={hs} />
     </div>
   )
@@ -225,7 +225,7 @@ function SimulateCanvas() {
 
   const confirmEdge = (relationType: string) => {
     if (!pendingEdge) return
-    const color = EDGE_COLORS[relationType] ?? '#22d3ee'
+    const color = EDGE_COLORS[relationType] ?? '#6366F1'
     setEdges(prev => addEdge({
       ...pendingEdge,
       id: `e-${pendingEdge.source}-${pendingEdge.target}-${Date.now()}`,
@@ -321,10 +321,10 @@ function SimulateCanvas() {
       {/* ── Header ── */}
       <div
         className="px-5 py-3 border-b border-cyan-900/25 flex items-center justify-between shrink-0"
-        style={{ boxShadow: '0 1px 0 rgba(34,211,238,0.04)' }}
+        style={{ boxShadow: '0 1px 0 rgba(99,102,241,0.04)' }}
       >
         <div>
-          <h1 className="text-base font-bold text-cyan-300 tracking-widest font-mono">SIMULATE</h1>
+          <h1 className="text-base font-bold text-cyan-300 tracking-widest font-mono">SIMULATION</h1>
           <p className="text-[11px] text-cyan-800 mt-0.5 font-mono">
             Hypothetical workspace — nothing here affects your Lab
           </p>
@@ -458,19 +458,19 @@ function SimulateCanvas() {
             minZoom={0.2}
             maxZoom={2}
             proOptions={{ hideAttribution: true }}
-            style={{ background: '#050508' }}
+            style={{ background: '#0B0D12' }}
             deleteKeyCode="Delete"
           >
             <Background
               variant={BackgroundVariant.Dots}
               gap={24}
               size={1}
-              color="rgba(34,211,238,0.1)"
+              color="rgba(99,102,241,0.1)"
             />
             <Controls
               style={{
                 background: '#08080d',
-                border: '1px solid rgba(34,211,238,0.15)',
+                border: '1px solid rgba(99,102,241,0.15)',
                 borderRadius: 8,
               }}
             />
@@ -499,7 +499,7 @@ function SimulateCanvas() {
             >
               <div
                 className="bg-[#08080d] border border-cyan-900/40 rounded-xl p-4 shadow-2xl w-44"
-                style={{ boxShadow: '0 0 40px rgba(34,211,238,0.08)' }}
+                style={{ boxShadow: '0 0 40px rgba(99,102,241,0.08)' }}
                 onClick={e => e.stopPropagation()}
               >
                 <div className="flex items-center justify-between mb-3">

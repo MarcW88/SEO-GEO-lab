@@ -47,7 +47,7 @@ export default async function DashboardPage() {
     <div className="p-8 max-w-5xl mx-auto">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-cyan-300 tracking-widest font-mono">CONTROL ROOM</h1>
+          <h1 className="text-2xl font-bold text-cyan-300 tracking-widest font-mono">DASHBOARD</h1>
           <p className="text-xs text-cyan-800 mt-1 font-mono">
             {experiments.length} simulation{experiments.length !== 1 ? 's' : ''} · {capabilities.length} function{capabilities.length !== 1 ? 's' : ''} · {tools.length} program{tools.length !== 1 ? 's' : ''}
           </p>
@@ -57,7 +57,7 @@ export default async function DashboardPage() {
           className="flex items-center gap-2 px-4 py-2 bg-cyan-900/50 hover:bg-cyan-800/50 border border-cyan-700/40 hover:border-cyan-600/60 text-cyan-300 text-xs font-mono font-medium rounded-lg transition-all tracking-wider"
         >
           <Plus className="w-3.5 h-3.5" />
-          INITIALIZE
+          VOIR LES EXPÉRIENCES
         </Link>
       </div>
 
@@ -177,7 +177,7 @@ export default async function DashboardPage() {
 
           <div className="mt-8 p-4 bg-zinc-900/50 border border-zinc-800/50 rounded-xl">
             <div className="text-xs font-semibold text-cyan-800 uppercase tracking-wider mb-3 font-mono">
-              Grid Status
+              Répartition par statut
             </div>
             {statusOrder.map((status) => {
               const count = experiments.filter((e) => e.status === status).length
@@ -196,7 +196,7 @@ export default async function DashboardPage() {
                         style={{
                           width: `${(count / experiments.length) * 100}%`,
                           backgroundColor: cfg.color.includes('cyan')
-                            ? '#22d3ee'
+                            ? '#6366F1'
                             : cfg.color.includes('emerald')
                             ? '#10b981'
                             : cfg.color.includes('violet')

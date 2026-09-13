@@ -24,17 +24,17 @@ import type { Experiment, Capability, Tool, ExperimentStatus } from '@/lib/types
 function ExperimentNode({ data }: NodeProps) {
   const { label, status, decision } = data as { label: string; status: ExperimentStatus; decision: string | null }
   const cfg = STATUS_CONFIG[status]
-  const handleStyle = { background: '#22d3ee', border: 'none', width: 7, height: 7, boxShadow: '0 0 6px #22d3ee80' }
+  const handleStyle = { background: '#6366F1', border: 'none', width: 7, height: 7, boxShadow: '0 0 6px #6366F180' }
   return (
     <div
       className={`px-3 py-2 rounded-lg border min-w-[160px] max-w-[200px] ${cfg.bg} ${cfg.border}`}
-      style={{ borderWidth: 1, boxShadow: `0 0 12px ${cfg.color.includes('cyan') ? 'rgba(34,211,238,0.15)' : cfg.color.includes('emerald') ? 'rgba(16,185,129,0.12)' : cfg.color.includes('violet') ? 'rgba(139,92,246,0.12)' : 'rgba(0,0,0,0.3)'}` }}
+      style={{ borderWidth: 1, boxShadow: `0 0 12px ${cfg.color.includes('cyan') ? 'rgba(99,102,241,0.15)' : cfg.color.includes('emerald') ? 'rgba(16,185,129,0.12)' : cfg.color.includes('violet') ? 'rgba(139,92,246,0.12)' : 'rgba(0,0,0,0.3)'}` }}
     >
       <Handle type="target" position={Position.Left} style={handleStyle} />
       <div className={`text-[10px] font-mono font-medium mb-1 ${cfg.color}`}>
         {cfg.icon} {cfg.label.toUpperCase()}
       </div>
-      <div className="text-[12px] font-semibold text-[#cff5ff] leading-snug">
+      <div className="text-[12px] font-semibold text-[#E9EAF2] leading-snug">
         {label}
       </div>
       {decision && (
@@ -54,7 +54,7 @@ function ToolNode({ data }: NodeProps) {
     <div className="px-3 py-2 rounded-lg border border-amber-900/50 bg-amber-950/20 min-w-[120px]" style={{ boxShadow: '0 0 10px rgba(217,119,6,0.1)' }}>
       <Handle type="target" position={Position.Left} style={handleStyle} />
       <div className="text-[10px] font-mono font-medium text-amber-500/80 mb-1 uppercase tracking-wider">⬡ Program</div>
-      <div className="text-[12px] font-semibold text-[#cff5ff]">{label}</div>
+      <div className="text-[12px] font-semibold text-[#E9EAF2]">{label}</div>
       <Handle type="source" position={Position.Right} style={handleStyle} />
     </div>
   )
@@ -76,7 +76,7 @@ function CapabilityNode({ data }: NodeProps) {
       <div className="text-[10px] font-mono font-medium mb-1 uppercase tracking-wider" style={{ color }}>
         ◈ Function
       </div>
-      <div className="text-[12px] font-semibold text-[#cff5ff]">{label}</div>
+      <div className="text-[12px] font-semibold text-[#E9EAF2]">{label}</div>
       <Handle type="source" position={Position.Right} style={handleStyle} />
     </div>
   )
@@ -89,7 +89,7 @@ const nodeTypes = {
 }
 
 export const EDGE_COLORS: Record<string, string> = {
-  feeds:       '#22d3ee',
+  feeds:       '#6366F1',
   enables:     '#10b981',
   validates:   '#34d399',
   extends:     '#06b6d4',
@@ -213,7 +213,7 @@ function MapCanvas({ rawData, showTools, showExps, showCaps, statusFilter, showL
   }, [rawData, showTools, showExps, showCaps, statusFilter, showLabels, setNodes, setEdges, fitView])
 
   return (
-    <div className="w-full h-full" style={{ background: '#050508' }}>
+    <div className="w-full h-full" style={{ background: '#0B0D12' }}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -223,12 +223,12 @@ function MapCanvas({ rawData, showTools, showExps, showCaps, statusFilter, showL
         minZoom={0.3}
         maxZoom={2}
         proOptions={{ hideAttribution: true }}
-        style={{ background: '#050508' }}
+        style={{ background: '#0B0D12' }}
       >
-        <Background variant={BackgroundVariant.Dots} gap={24} size={1} color="rgba(34,211,238,0.12)" />
-        <Controls style={{ background: '#08080d', border: '1px solid rgba(34,211,238,0.15)', borderRadius: 8 }} />
+        <Background variant={BackgroundVariant.Dots} gap={24} size={1} color="rgba(99,102,241,0.12)" />
+        <Controls style={{ background: '#14161F', border: '1px solid rgba(99,102,241,0.15)', borderRadius: 8 }} />
         <MiniMap
-          style={{ background: '#08080d', border: '1px solid rgba(34,211,238,0.15)', borderRadius: 8 }}
+          style={{ background: '#14161F', border: '1px solid rgba(99,102,241,0.15)', borderRadius: 8 }}
           maskColor="rgba(5,5,8,0.75)"
           nodeColor={(node) => {
             if (node.type === 'toolNode')       return '#92400e'
