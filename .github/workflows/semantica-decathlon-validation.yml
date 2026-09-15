@@ -25,10 +25,22 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Download Semantica wheel
+        run: |
+          mkdir -p wheelhouse
+          python -m pip download --no-deps 'semantica==0.6.8' -d wheelhouse
+
+      - name: Upload Semantica wheel
+        uses: actions/upload-artifact@v4
+        with:
+          name: semantica-0.6.8-wheel
+          path: wheelhouse/
+          if-no-files-found: error
+
       - name: Install lightweight Semantica KG stack
         run: |
           python -m pip install --upgrade pip
-          python -m pip install --no-deps 'semantica==0.6.8'
+          python -m pip install --no-deps wheelhouse/semantica-0.6.8-py3-none-any.whl
           python -m pip install numpy scipy networkx gensim pyyaml pydantic loguru tqdm python-dateutil
 
       - name: Run native Semantica validation
