@@ -1409,81 +1409,81 @@
     "louvain": {
       "communities": [
         [
-          "label:fitness",
-          "label:cyclisme",
+          "label:mobilite-urbaine",
+          "label:running",
           "label:nutrition",
           "label:veloroute",
-          "label:running",
-          "label:mobilite-urbaine"
+          "label:fitness",
+          "label:cyclisme"
         ],
         [
           "label:randonnee",
-          "label:camping",
           "label:natation",
-          "label:ski",
-          "label:wintersport"
+          "label:wintersport",
+          "label:camping",
+          "label:ski"
         ],
         [
-          "label:padel",
-          "label:football"
+          "label:football",
+          "label:padel"
         ]
       ],
       "node_assignments": {
-        "label:fitness": 0,
-        "label:cyclisme": 0,
+        "label:mobilite-urbaine": 0,
+        "label:running": 0,
         "label:nutrition": 0,
         "label:veloroute": 0,
-        "label:running": 0,
-        "label:mobilite-urbaine": 0,
+        "label:fitness": 0,
+        "label:cyclisme": 0,
         "label:randonnee": 1,
-        "label:camping": 1,
         "label:natation": 1,
-        "label:ski": 1,
         "label:wintersport": 1,
-        "label:padel": 2,
-        "label:football": 2
+        "label:camping": 1,
+        "label:ski": 1,
+        "label:football": 2,
+        "label:padel": 2
       },
-      "modularity": 0.33610818368022133,
+      "modularity": 0.3361081836802212,
       "algorithm": "louvain"
     },
     "leiden": {
       "communities": [
         [
-          "label:fitness",
-          "label:cyclisme",
+          "label:mobilite-urbaine",
+          "label:running",
           "label:nutrition",
           "label:veloroute",
-          "label:running",
-          "label:mobilite-urbaine"
+          "label:fitness",
+          "label:cyclisme"
         ],
         [
           "label:randonnee",
-          "label:camping",
           "label:natation",
-          "label:ski",
-          "label:wintersport"
+          "label:wintersport",
+          "label:camping",
+          "label:ski"
         ],
         [
-          "label:padel",
-          "label:football"
+          "label:football",
+          "label:padel"
         ]
       ],
       "node_assignments": {
-        "label:fitness": 0,
-        "label:cyclisme": 0,
+        "label:mobilite-urbaine": 0,
+        "label:running": 0,
         "label:nutrition": 0,
         "label:veloroute": 0,
-        "label:running": 0,
-        "label:mobilite-urbaine": 0,
+        "label:fitness": 0,
+        "label:cyclisme": 0,
         "label:randonnee": 1,
-        "label:camping": 1,
         "label:natation": 1,
-        "label:ski": 1,
         "label:wintersport": 1,
-        "label:padel": 2,
-        "label:football": 2
+        "label:camping": 1,
+        "label:ski": 1,
+        "label:football": 2,
+        "label:padel": 2
       },
-      "modularity": 0.33610818368022133,
+      "modularity": 0.3361081836802212,
       "algorithm": "leiden"
     }
   },
