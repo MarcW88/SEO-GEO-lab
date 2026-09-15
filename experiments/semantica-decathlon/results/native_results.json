@@ -1,0 +1,1693 @@
+{
+  "semantica": {
+    "version": "0.6.8",
+    "file": "/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/site-packages/semantica/__init__.py"
+  },
+  "graph_validation": {
+    "label": {
+      "is_valid": true,
+      "issues": [
+        "Graph contains 1 cycles."
+      ]
+    },
+    "source": {
+      "is_valid": true,
+      "issues": [
+        "Found 6 orphan nodes (no relationships)."
+      ]
+    },
+    "concept_mechanism": {
+      "is_valid": true,
+      "issues": [
+        "Found 7 orphan nodes (no relationships)."
+      ]
+    },
+    "asset_mechanism": {
+      "is_valid": true,
+      "issues": [
+        "Found 8 orphan nodes (no relationships)."
+      ]
+    }
+  },
+  "centrality": {
+    "label": {
+      "centrality_measures": {
+        "degree": {
+          "centrality": {
+            "label:camping": 0.25,
+            "label:cyclisme": 0.3333333333333333,
+            "label:fitness": 0.41666666666666663,
+            "label:football": 0.25,
+            "label:mobilite-urbaine": 0.08333333333333333,
+            "label:natation": 0.08333333333333333,
+            "label:nutrition": 0.08333333333333333,
+            "label:padel": 0.08333333333333333,
+            "label:randonnee": 0.25,
+            "label:running": 0.5,
+            "label:ski": 0.08333333333333333,
+            "label:veloroute": 0.25,
+            "label:wintersport": 0.3333333333333333
+          },
+          "rankings": [
+            {
+              "node": "label:running",
+              "score": 0.5
+            },
+            {
+              "node": "label:fitness",
+              "score": 0.41666666666666663
+            },
+            {
+              "node": "label:cyclisme",
+              "score": 0.3333333333333333
+            },
+            {
+              "node": "label:wintersport",
+              "score": 0.3333333333333333
+            },
+            {
+              "node": "label:camping",
+              "score": 0.25
+            },
+            {
+              "node": "label:football",
+              "score": 0.25
+            },
+            {
+              "node": "label:randonnee",
+              "score": 0.25
+            },
+            {
+              "node": "label:veloroute",
+              "score": 0.25
+            },
+            {
+              "node": "label:mobilite-urbaine",
+              "score": 0.08333333333333333
+            },
+            {
+              "node": "label:natation",
+              "score": 0.08333333333333333
+            },
+            {
+              "node": "label:nutrition",
+              "score": 0.08333333333333333
+            },
+            {
+              "node": "label:padel",
+              "score": 0.08333333333333333
+            },
+            {
+              "node": "label:ski",
+              "score": 0.08333333333333333
+            }
+          ],
+          "max_degree": 6,
+          "total_nodes": 13
+        },
+        "betweenness": {
+          "centrality": {
+            "label:camping": 0.16666666666666669,
+            "label:cyclisme": 0.16666666666666669,
+            "label:fitness": 0.30303030303030304,
+            "label:football": 0.16666666666666669,
+            "label:mobilite-urbaine": 0.0,
+            "label:natation": 0.0,
+            "label:nutrition": 0.0,
+            "label:padel": 0.0,
+            "label:randonnee": 0.16666666666666669,
+            "label:running": 0.3712121212121212,
+            "label:ski": 0.0,
+            "label:veloroute": 0.0,
+            "label:wintersport": 0.28030303030303033
+          },
+          "rankings": [
+            {
+              "node": "label:running",
+              "score": 0.3712121212121212
+            },
+            {
+              "node": "label:fitness",
+              "score": 0.30303030303030304
+            },
+            {
+              "node": "label:wintersport",
+              "score": 0.28030303030303033
+            },
+            {
+              "node": "label:camping",
+              "score": 0.16666666666666669
+            },
+            {
+              "node": "label:cyclisme",
+              "score": 0.16666666666666669
+            },
+            {
+              "node": "label:football",
+              "score": 0.16666666666666669
+            },
+            {
+              "node": "label:randonnee",
+              "score": 0.16666666666666669
+            },
+            {
+              "node": "label:mobilite-urbaine",
+              "score": 0.0
+            },
+            {
+              "node": "label:natation",
+              "score": 0.0
+            },
+            {
+              "node": "label:nutrition",
+              "score": 0.0
+            },
+            {
+              "node": "label:padel",
+              "score": 0.0
+            },
+            {
+              "node": "label:ski",
+              "score": 0.0
+            },
+            {
+              "node": "label:veloroute",
+              "score": 0.0
+            }
+          ]
+        },
+        "closeness": {
+          "centrality": {
+            "label:camping": 0.41379310344827586,
+            "label:cyclisme": 0.48,
+            "label:fitness": 0.6,
+            "label:football": 0.46153846153846156,
+            "label:mobilite-urbaine": 0.3333333333333333,
+            "label:natation": 0.3,
+            "label:nutrition": 0.3870967741935484,
+            "label:padel": 0.32432432432432434,
+            "label:randonnee": 0.5217391304347826,
+            "label:running": 0.6,
+            "label:ski": 0.35294117647058826,
+            "label:veloroute": 0.46153846153846156,
+            "label:wintersport": 0.5217391304347826
+          },
+          "rankings": [
+            {
+              "node": "label:fitness",
+              "score": 0.6
+            },
+            {
+              "node": "label:running",
+              "score": 0.6
+            },
+            {
+              "node": "label:randonnee",
+              "score": 0.5217391304347826
+            },
+            {
+              "node": "label:wintersport",
+              "score": 0.5217391304347826
+            },
+            {
+              "node": "label:cyclisme",
+              "score": 0.48
+            },
+            {
+              "node": "label:football",
+              "score": 0.46153846153846156
+            },
+            {
+              "node": "label:veloroute",
+              "score": 0.46153846153846156
+            },
+            {
+              "node": "label:camping",
+              "score": 0.41379310344827586
+            },
+            {
+              "node": "label:nutrition",
+              "score": 0.3870967741935484
+            },
+            {
+              "node": "label:ski",
+              "score": 0.35294117647058826
+            },
+            {
+              "node": "label:mobilite-urbaine",
+              "score": 0.3333333333333333
+            },
+            {
+              "node": "label:padel",
+              "score": 0.32432432432432434
+            },
+            {
+              "node": "label:natation",
+              "score": 0.3
+            }
+          ]
+        },
+        "eigenvector": {
+          "centrality": {
+            "label:camping": 0.13760770664656938,
+            "label:cyclisme": 0.3834960479419629,
+            "label:fitness": 0.4720650964788904,
+            "label:football": 0.27933781904380817,
+            "label:mobilite-urbaine": 0.10249541403580383,
+            "label:natation": 0.03677867208059442,
+            "label:nutrition": 0.1332172363791807,
+            "label:padel": 0.07465754208259823,
+            "label:randonnee": 0.23497264895703635,
+            "label:running": 0.4984436804586821,
+            "label:ski": 0.06497674049726121,
+            "label:veloroute": 0.3618798296736825,
+            "label:wintersport": 0.2431132046362401
+          },
+          "rankings": [
+            {
+              "node": "label:running",
+              "score": 0.4984436804586821
+            },
+            {
+              "node": "label:fitness",
+              "score": 0.4720650964788904
+            },
+            {
+              "node": "label:cyclisme",
+              "score": 0.3834960479419629
+            },
+            {
+              "node": "label:veloroute",
+              "score": 0.3618798296736825
+            },
+            {
+              "node": "label:football",
+              "score": 0.27933781904380817
+            },
+            {
+              "node": "label:wintersport",
+              "score": 0.2431132046362401
+            },
+            {
+              "node": "label:randonnee",
+              "score": 0.23497264895703635
+            },
+            {
+              "node": "label:camping",
+              "score": 0.13760770664656938
+            },
+            {
+              "node": "label:nutrition",
+              "score": 0.1332172363791807
+            },
+            {
+              "node": "label:mobilite-urbaine",
+              "score": 0.10249541403580383
+            },
+            {
+              "node": "label:padel",
+              "score": 0.07465754208259823
+            },
+            {
+              "node": "label:ski",
+              "score": 0.06497674049726121
+            },
+            {
+              "node": "label:natation",
+              "score": 0.03677867208059442
+            }
+          ]
+        }
+      },
+      "types_calculated": [
+        "degree",
+        "betweenness",
+        "closeness",
+        "eigenvector"
+      ],
+      "total_nodes": 13
+    },
+    "source": {
+      "centrality_measures": {
+        "degree": {
+          "centrality": {
+            "label:camping": 0.1568627450980392,
+            "label:cyclisme": 0.1568627450980392,
+            "label:fitness": 0.1568627450980392,
+            "label:football": 0.0,
+            "label:mobilite-urbaine": 0.1568627450980392,
+            "label:natation": 0.0,
+            "label:nutrition": 0.0,
+            "label:padel": 0.0,
+            "label:randonnee": 0.1568627450980392,
+            "label:running": 0.1568627450980392,
+            "label:ski": 0.0,
+            "label:veloroute": 0.1568627450980392,
+            "label:wintersport": 0.0,
+            "source:materiel-velo.com": 0.058823529411764705,
+            "source:reddit.com": 0.11764705882352941,
+            "source:my-velo.fr": 0.0392156862745098,
+            "source:mint-bikes.com": 0.0392156862745098,
+            "source:instagram.com": 0.058823529411764705,
+            "source:cyclisthouse.origine-cycles.com": 0.0392156862745098,
+            "source:gravelpassion.fr": 0.0392156862745098,
+            "source:youvelo.fr": 0.0196078431372549,
+            "source:canyon.com": 0.0196078431372549,
+            "source:enrouelibre.fr": 0.0196078431372549,
+            "source:montania-sport.com": 0.0196078431372549,
+            "source:hardloop.fr": 0.0392156862745098,
+            "source:tonton-outdoor.com": 0.0392156862745098,
+            "source:asadventure.com": 0.0196078431372549,
+            "source:rayonrando.com": 0.0392156862745098,
+            "source:auvieuxcampeur.fr": 0.0196078431372549,
+            "source:monbivouac.com": 0.0196078431372549,
+            "source:glisshop.com": 0.0196078431372549,
+            "source:i-run.fr": 0.0392156862745098,
+            "source:cimalp.com": 0.0196078431372549,
+            "source:facebook.com": 0.0196078431372549,
+            "source:fitnessboutique.fr": 0.0196078431372549,
+            "source:protrainer.fr": 0.0196078431372549,
+            "source:lorangebleue.fr": 0.0196078431372549,
+            "source:fflose.com": 0.0196078431372549,
+            "source:velo-critique.com": 0.0196078431372549,
+            "source:blog.therunningcollective.fr": 0.0196078431372549,
+            "source:running-addict.fr": 0.0196078431372549,
+            "source:garmin.com": 0.0196078431372549,
+            "source:runnea.fr": 0.0196078431372549,
+            "source:toutpourmasante.fr": 0.0196078431372549,
+            "source:frandroid.com": 0.0196078431372549,
+            "source:cleanrider.com": 0.0196078431372549,
+            "source:police.be": 0.0196078431372549,
+            "source:blog.roulezjeunesse.com": 0.0196078431372549,
+            "source:wee-bot.com": 0.0196078431372549,
+            "source:mobilityurban.fr": 0.0196078431372549,
+            "source:micro-mobility.fr": 0.0196078431372549,
+            "source:upway.be": 0.0196078431372549
+          },
+          "rankings": [
+            {
+              "node": "label:camping",
+              "score": 0.1568627450980392
+            },
+            {
+              "node": "label:cyclisme",
+              "score": 0.1568627450980392
+            },
+            {
+              "node": "label:fitness",
+              "score": 0.1568627450980392
+            },
+            {
+              "node": "label:mobilite-urbaine",
+              "score": 0.1568627450980392
+            },
+            {
+              "node": "label:randonnee",
+              "score": 0.1568627450980392
+            },
+            {
+              "node": "label:running",
+              "score": 0.1568627450980392
+            },
+            {
+              "node": "label:veloroute",
+              "score": 0.1568627450980392
+            },
+            {
+              "node": "source:reddit.com",
+              "score": 0.11764705882352941
+            },
+            {
+              "node": "source:materiel-velo.com",
+              "score": 0.058823529411764705
+            },
+            {
+              "node": "source:instagram.com",
+              "score": 0.058823529411764705
+            },
+            {
+              "node": "source:my-velo.fr",
+              "score": 0.0392156862745098
+            },
+            {
+              "node": "source:mint-bikes.com",
+              "score": 0.0392156862745098
+            },
+            {
+              "node": "source:cyclisthouse.origine-cycles.com",
+              "score": 0.0392156862745098
+            },
+            {
+              "node": "source:gravelpassion.fr",
+              "score": 0.0392156862745098
+            },
+            {
+              "node": "source:hardloop.fr",
+              "score": 0.0392156862745098
+            },
+            {
+              "node": "source:tonton-outdoor.com",
+              "score": 0.0392156862745098
+            },
+            {
+              "node": "source:rayonrando.com",
+              "score": 0.0392156862745098
+            },
+            {
+              "node": "source:i-run.fr",
+              "score": 0.0392156862745098
+            },
+            {
+              "node": "source:youvelo.fr",
+              "score": 0.0196078431372549
+            },
+            {
+              "node": "source:canyon.com",
+              "score": 0.0196078431372549
+            },
+            {
+              "node": "source:enrouelibre.fr",
+              "score": 0.0196078431372549
+            },
+            {
+              "node": "source:montania-sport.com",
+              "score": 0.0196078431372549
+            },
+            {
+              "node": "source:asadventure.com",
+              "score": 0.0196078431372549
+            },
+            {
+              "node": "source:auvieuxcampeur.fr",
+              "score": 0.0196078431372549
+            },
+            {
+              "node": "source:monbivouac.com",
+              "score": 0.0196078431372549
+            },
+            {
+              "node": "source:glisshop.com",
+              "score": 0.0196078431372549
+            },
+            {
+              "node": "source:cimalp.com",
+              "score": 0.0196078431372549
+            },
+            {
+              "node": "source:facebook.com",
+              "score": 0.0196078431372549
+            },
+            {
+              "node": "source:fitnessboutique.fr",
+              "score": 0.0196078431372549
+            },
+            {
+              "node": "source:protrainer.fr",
+              "score": 0.0196078431372549
+            },
+            {
+              "node": "source:lorangebleue.fr",
+              "score": 0.0196078431372549
+            },
+            {
+              "node": "source:fflose.com",
+              "score": 0.0196078431372549
+            },
+            {
+              "node": "source:velo-critique.com",
+              "score": 0.0196078431372549
+            },
+            {
+              "node": "source:blog.therunningcollective.fr",
+              "score": 0.0196078431372549
+            },
+            {
+              "node": "source:running-addict.fr",
+              "score": 0.0196078431372549
+            },
+            {
+              "node": "source:garmin.com",
+              "score": 0.0196078431372549
+            },
+            {
+              "node": "source:runnea.fr",
+              "score": 0.0196078431372549
+            },
+            {
+              "node": "source:toutpourmasante.fr",
+              "score": 0.0196078431372549
+            },
+            {
+              "node": "source:frandroid.com",
+              "score": 0.0196078431372549
+            },
+            {
+              "node": "source:cleanrider.com",
+              "score": 0.0196078431372549
+            },
+            {
+              "node": "source:police.be",
+              "score": 0.0196078431372549
+            },
+            {
+              "node": "source:blog.roulezjeunesse.com",
+              "score": 0.0196078431372549
+            },
+            {
+              "node": "source:wee-bot.com",
+              "score": 0.0196078431372549
+            },
+            {
+              "node": "source:mobilityurban.fr",
+              "score": 0.0196078431372549
+            },
+            {
+              "node": "source:micro-mobility.fr",
+              "score": 0.0196078431372549
+            },
+            {
+              "node": "source:upway.be",
+              "score": 0.0196078431372549
+            },
+            {
+              "node": "label:football",
+              "score": 0.0
+            },
+            {
+              "node": "label:natation",
+              "score": 0.0
+            },
+            {
+              "node": "label:nutrition",
+              "score": 0.0
+            },
+            {
+              "node": "label:padel",
+              "score": 0.0
+            },
+            {
+              "node": "label:ski",
+              "score": 0.0
+            },
+            {
+              "node": "label:wintersport",
+              "score": 0.0
+            }
+          ],
+          "max_degree": 8,
+          "total_nodes": 52
+        },
+        "betweenness": {
+          "centrality": {
+            "label:camping": 0.13198879551820727,
+            "label:cyclisme": 0.09118860877684407,
+            "label:fitness": 0.1389271708683473,
+            "label:football": 0.0,
+            "label:mobilite-urbaine": 0.02196078431372549,
+            "label:natation": 0.0,
+            "label:nutrition": 0.0,
+            "label:padel": 0.0,
+            "label:randonnee": 0.12263211951447242,
+            "label:running": 0.14351167133520074,
+            "label:ski": 0.0,
+            "label:veloroute": 0.09802614379084969,
+            "label:wintersport": 0.0,
+            "source:materiel-velo.com": 0.01903267973856209,
+            "source:reddit.com": 0.28396451914098947,
+            "source:my-velo.fr": 0.0010457516339869282,
+            "source:mint-bikes.com": 0.0010457516339869282,
+            "source:instagram.com": 0.03679738562091503,
+            "source:cyclisthouse.origine-cycles.com": 0.0010457516339869282,
+            "source:gravelpassion.fr": 0.0010457516339869282,
+            "source:youvelo.fr": 0.0,
+            "source:canyon.com": 0.0,
+            "source:enrouelibre.fr": 0.0,
+            "source:montania-sport.com": 0.0,
+            "source:hardloop.fr": 0.004705882352941176,
+            "source:tonton-outdoor.com": 0.004705882352941176,
+            "source:asadventure.com": 0.0,
+            "source:rayonrando.com": 0.004705882352941176,
+            "source:auvieuxcampeur.fr": 0.0,
+            "source:monbivouac.com": 0.0,
+            "source:glisshop.com": 0.0,
+            "source:i-run.fr": 0.015238095238095236,
+            "source:cimalp.com": 0.0,
+            "source:facebook.com": 0.0,
+            "source:fitnessboutique.fr": 0.0,
+            "source:protrainer.fr": 0.0,
+            "source:lorangebleue.fr": 0.0,
+            "source:fflose.com": 0.0,
+            "source:velo-critique.com": 0.0,
+            "source:blog.therunningcollective.fr": 0.0,
+            "source:running-addict.fr": 0.0,
+            "source:garmin.com": 0.0,
+            "source:runnea.fr": 0.0,
+            "source:toutpourmasante.fr": 0.0,
+            "source:frandroid.com": 0.0,
+            "source:cleanrider.com": 0.0,
+            "source:police.be": 0.0,
+            "source:blog.roulezjeunesse.com": 0.0,
+            "source:wee-bot.com": 0.0,
+            "source:mobilityurban.fr": 0.0,
+            "source:micro-mobility.fr": 0.0,
+            "source:upway.be": 0.0
+          },
+          "rankings": [
+            {
+              "node": "source:reddit.com",
+              "score": 0.28396451914098947
+            },
+            {
+              "node": "label:running",
+              "score": 0.14351167133520074
+            },
+            {
+              "node": "label:fitness",
+              "score": 0.1389271708683473
+            },
+            {
+              "node": "label:camping",
+              "score": 0.13198879551820727
+            },
+            {
+              "node": "label:randonnee",
+              "score": 0.12263211951447242
+            },
+            {
+              "node": "label:veloroute",
+              "score": 0.09802614379084969
+            },
+            {
+              "node": "label:cyclisme",
+              "score": 0.09118860877684407
+            },
+            {
+              "node": "source:instagram.com",
+              "score": 0.03679738562091503
+            },
+            {
+              "node": "label:mobilite-urbaine",
+              "score": 0.02196078431372549
+            },
+            {
+              "node": "source:materiel-velo.com",
+              "score": 0.01903267973856209
+            },
+            {
+              "node": "source:i-run.fr",
+              "score": 0.015238095238095236
+            },
+            {
+              "node": "source:hardloop.fr",
+              "score": 0.004705882352941176
+            },
+            {
+              "node": "source:tonton-outdoor.com",
+              "score": 0.004705882352941176
+            },
+            {
+              "node": "source:rayonrando.com",
+              "score": 0.004705882352941176
+            },
+            {
+              "node": "source:my-velo.fr",
+              "score": 0.0010457516339869282
+            },
+            {
+              "node": "source:mint-bikes.com",
+              "score": 0.0010457516339869282
+            },
+            {
+              "node": "source:cyclisthouse.origine-cycles.com",
+              "score": 0.0010457516339869282
+            },
+            {
+              "node": "source:gravelpassion.fr",
+              "score": 0.0010457516339869282
+            },
+            {
+              "node": "label:football",
+              "score": 0.0
+            },
+            {
+              "node": "label:natation",
+              "score": 0.0
+            },
+            {
+              "node": "label:nutrition",
+              "score": 0.0
+            },
+            {
+              "node": "label:padel",
+              "score": 0.0
+            },
+            {
+              "node": "label:ski",
+              "score": 0.0
+            },
+            {
+              "node": "label:wintersport",
+              "score": 0.0
+            },
+            {
+              "node": "source:youvelo.fr",
+              "score": 0.0
+            },
+            {
+              "node": "source:canyon.com",
+              "score": 0.0
+            },
+            {
+              "node": "source:enrouelibre.fr",
+              "score": 0.0
+            },
+            {
+              "node": "source:montania-sport.com",
+              "score": 0.0
+            },
+            {
+              "node": "source:asadventure.com",
+              "score": 0.0
+            },
+            {
+              "node": "source:auvieuxcampeur.fr",
+              "score": 0.0
+            },
+            {
+              "node": "source:monbivouac.com",
+              "score": 0.0
+            },
+            {
+              "node": "source:glisshop.com",
+              "score": 0.0
+            },
+            {
+              "node": "source:cimalp.com",
+              "score": 0.0
+            },
+            {
+              "node": "source:facebook.com",
+              "score": 0.0
+            },
+            {
+              "node": "source:fitnessboutique.fr",
+              "score": 0.0
+            },
+            {
+              "node": "source:protrainer.fr",
+              "score": 0.0
+            },
+            {
+              "node": "source:lorangebleue.fr",
+              "score": 0.0
+            },
+            {
+              "node": "source:fflose.com",
+              "score": 0.0
+            },
+            {
+              "node": "source:velo-critique.com",
+              "score": 0.0
+            },
+            {
+              "node": "source:blog.therunningcollective.fr",
+              "score": 0.0
+            },
+            {
+              "node": "source:running-addict.fr",
+              "score": 0.0
+            },
+            {
+              "node": "source:garmin.com",
+              "score": 0.0
+            },
+            {
+              "node": "source:runnea.fr",
+              "score": 0.0
+            },
+            {
+              "node": "source:toutpourmasante.fr",
+              "score": 0.0
+            },
+            {
+              "node": "source:frandroid.com",
+              "score": 0.0
+            },
+            {
+              "node": "source:cleanrider.com",
+              "score": 0.0
+            },
+            {
+              "node": "source:police.be",
+              "score": 0.0
+            },
+            {
+              "node": "source:blog.roulezjeunesse.com",
+              "score": 0.0
+            },
+            {
+              "node": "source:wee-bot.com",
+              "score": 0.0
+            },
+            {
+              "node": "source:mobilityurban.fr",
+              "score": 0.0
+            },
+            {
+              "node": "source:micro-mobility.fr",
+              "score": 0.0
+            },
+            {
+              "node": "source:upway.be",
+              "score": 0.0
+            }
+          ]
+        },
+        "closeness": {
+          "centrality": {
+            "label:camping": 0.2920892494929006,
+            "label:cyclisme": 0.2920892494929006,
+            "label:fitness": 0.2920892494929006,
+            "label:football": 0.0,
+            "label:mobilite-urbaine": 0.1568627450980392,
+            "label:natation": 0.0,
+            "label:nutrition": 0.0,
+            "label:padel": 0.0,
+            "label:randonnee": 0.2920892494929006,
+            "label:running": 0.2920892494929006,
+            "label:ski": 0.0,
+            "label:veloroute": 0.2920892494929006,
+            "label:wintersport": 0.0,
+            "source:materiel-velo.com": 0.24434389140271495,
+            "source:reddit.com": 0.3850267379679144,
+            "source:my-velo.fr": 0.21906693711967548,
+            "source:mint-bikes.com": 0.21906693711967548,
+            "source:instagram.com": 0.2647058823529412,
+            "source:cyclisthouse.origine-cycles.com": 0.21906693711967548,
+            "source:gravelpassion.fr": 0.21906693711967548,
+            "source:youvelo.fr": 0.20829315332690454,
+            "source:canyon.com": 0.20829315332690454,
+            "source:enrouelibre.fr": 0.20829315332690454,
+            "source:montania-sport.com": 0.20829315332690454,
+            "source:hardloop.fr": 0.22689075630252103,
+            "source:tonton-outdoor.com": 0.22689075630252103,
+            "source:asadventure.com": 0.20829315332690454,
+            "source:rayonrando.com": 0.22689075630252103,
+            "source:auvieuxcampeur.fr": 0.20829315332690454,
+            "source:monbivouac.com": 0.20829315332690454,
+            "source:glisshop.com": 0.20829315332690454,
+            "source:i-run.fr": 0.23529411764705882,
+            "source:cimalp.com": 0.20829315332690454,
+            "source:facebook.com": 0.20829315332690454,
+            "source:fitnessboutique.fr": 0.20829315332690454,
+            "source:protrainer.fr": 0.20829315332690454,
+            "source:lorangebleue.fr": 0.20829315332690454,
+            "source:fflose.com": 0.20829315332690454,
+            "source:velo-critique.com": 0.20829315332690454,
+            "source:blog.therunningcollective.fr": 0.20829315332690454,
+            "source:running-addict.fr": 0.20829315332690454,
+            "source:garmin.com": 0.20829315332690454,
+            "source:runnea.fr": 0.20829315332690454,
+            "source:toutpourmasante.fr": 0.20829315332690454,
+            "source:frandroid.com": 0.08366013071895424,
+            "source:cleanrider.com": 0.08366013071895424,
+            "source:police.be": 0.08366013071895424,
+            "source:blog.roulezjeunesse.com": 0.08366013071895424,
+            "source:wee-bot.com": 0.08366013071895424,
+            "source:mobilityurban.fr": 0.08366013071895424,
+            "source:micro-mobility.fr": 0.08366013071895424,
+            "source:upway.be": 0.08366013071895424
+          },
+          "rankings": [
+            {
+              "node": "source:reddit.com",
+              "score": 0.3850267379679144
+            },
+            {
+              "node": "label:camping",
+              "score": 0.2920892494929006
+            },
+            {
+              "node": "label:cyclisme",
+              "score": 0.2920892494929006
+            },
+            {
+              "node": "label:fitness",
+              "score": 0.2920892494929006
+            },
+            {
+              "node": "label:randonnee",
+              "score": 0.2920892494929006
+            },
+            {
+              "node": "label:running",
+              "score": 0.2920892494929006
+            },
+            {
+              "node": "label:veloroute",
+              "score": 0.2920892494929006
+            },
+            {
+              "node": "source:instagram.com",
+              "score": 0.2647058823529412
+            },
+            {
+              "node": "source:materiel-velo.com",
+              "score": 0.24434389140271495
+            },
+            {
+              "node": "source:i-run.fr",
+              "score": 0.23529411764705882
+            },
+            {
+              "node": "source:hardloop.fr",
+              "score": 0.22689075630252103
+            },
+            {
+              "node": "source:tonton-outdoor.com",
+              "score": 0.22689075630252103
+            },
+            {
+              "node": "source:rayonrando.com",
+              "score": 0.22689075630252103
+            },
+            {
+              "node": "source:my-velo.fr",
+              "score": 0.21906693711967548
+            },
+            {
+              "node": "source:mint-bikes.com",
+              "score": 0.21906693711967548
+            },
+            {
+              "node": "source:cyclisthouse.origine-cycles.com",
+              "score": 0.21906693711967548
+            },
+            {
+              "node": "source:gravelpassion.fr",
+              "score": 0.21906693711967548
+            },
+            {
+              "node": "source:youvelo.fr",
+              "score": 0.20829315332690454
+            },
+            {
+              "node": "source:canyon.com",
+              "score": 0.20829315332690454
+            },
+            {
+              "node": "source:enrouelibre.fr",
+              "score": 0.20829315332690454
+            },
+            {
+              "node": "source:montania-sport.com",
+              "score": 0.20829315332690454
+            },
+            {
+              "node": "source:asadventure.com",
+              "score": 0.20829315332690454
+            },
+            {
+              "node": "source:auvieuxcampeur.fr",
+              "score": 0.20829315332690454
+            },
+            {
+              "node": "source:monbivouac.com",
+              "score": 0.20829315332690454
+            },
+            {
+              "node": "source:glisshop.com",
+              "score": 0.20829315332690454
+            },
+            {
+              "node": "source:cimalp.com",
+              "score": 0.20829315332690454
+            },
+            {
+              "node": "source:facebook.com",
+              "score": 0.20829315332690454
+            },
+            {
+              "node": "source:fitnessboutique.fr",
+              "score": 0.20829315332690454
+            },
+            {
+              "node": "source:protrainer.fr",
+              "score": 0.20829315332690454
+            },
+            {
+              "node": "source:lorangebleue.fr",
+              "score": 0.20829315332690454
+            },
+            {
+              "node": "source:fflose.com",
+              "score": 0.20829315332690454
+            },
+            {
+              "node": "source:velo-critique.com",
+              "score": 0.20829315332690454
+            },
+            {
+              "node": "source:blog.therunningcollective.fr",
+              "score": 0.20829315332690454
+            },
+            {
+              "node": "source:running-addict.fr",
+              "score": 0.20829315332690454
+            },
+            {
+              "node": "source:garmin.com",
+              "score": 0.20829315332690454
+            },
+            {
+              "node": "source:runnea.fr",
+              "score": 0.20829315332690454
+            },
+            {
+              "node": "source:toutpourmasante.fr",
+              "score": 0.20829315332690454
+            },
+            {
+              "node": "label:mobilite-urbaine",
+              "score": 0.1568627450980392
+            },
+            {
+              "node": "source:frandroid.com",
+              "score": 0.08366013071895424
+            },
+            {
+              "node": "source:cleanrider.com",
+              "score": 0.08366013071895424
+            },
+            {
+              "node": "source:police.be",
+              "score": 0.08366013071895424
+            },
+            {
+              "node": "source:blog.roulezjeunesse.com",
+              "score": 0.08366013071895424
+            },
+            {
+              "node": "source:wee-bot.com",
+              "score": 0.08366013071895424
+            },
+            {
+              "node": "source:mobilityurban.fr",
+              "score": 0.08366013071895424
+            },
+            {
+              "node": "source:micro-mobility.fr",
+              "score": 0.08366013071895424
+            },
+            {
+              "node": "source:upway.be",
+              "score": 0.08366013071895424
+            },
+            {
+              "node": "label:football",
+              "score": 0.0
+            },
+            {
+              "node": "label:natation",
+              "score": 0.0
+            },
+            {
+              "node": "label:nutrition",
+              "score": 0.0
+            },
+            {
+              "node": "label:padel",
+              "score": 0.0
+            },
+            {
+              "node": "label:ski",
+              "score": 0.0
+            },
+            {
+              "node": "label:wintersport",
+              "score": 0.0
+            }
+          ]
+        },
+        "eigenvector": {
+          "centrality": {
+            "label:camping": 0.21602922261311838,
+            "label:cyclisme": 0.38234951765972547,
+            "label:fitness": 0.27489654126736873,
+            "label:football": 4.254858647712153e-33,
+            "label:mobilite-urbaine": 3.662456265816505e-07,
+            "label:natation": 4.254858647712153e-33,
+            "label:nutrition": 4.254858647712153e-33,
+            "label:padel": 4.254858647712153e-33,
+            "label:randonnee": 0.23263592666416846,
+            "label:running": 0.23338814196458232,
+            "label:ski": 4.254858647712153e-33,
+            "label:veloroute": 0.35068877017704964,
+            "label:wintersport": 4.254858647712153e-33,
+            "source:materiel-velo.com": 0.23721451622161438,
+            "source:reddit.com": 0.39773742345705626,
+            "source:my-velo.fr": 0.1725181966816866,
+            "source:mint-bikes.com": 0.1725181966816866,
+            "source:instagram.com": 0.20960896941656032,
+            "source:cyclisthouse.origine-cycles.com": 0.1725181966816866,
+            "source:gravelpassion.fr": 0.1725181966816866,
+            "source:youvelo.fr": 0.08998476032765636,
+            "source:canyon.com": 0.08253343635403025,
+            "source:enrouelibre.fr": 0.08253343635403025,
+            "source:montania-sport.com": 0.05084330438561663,
+            "source:hardloop.fr": 0.10559501768646573,
+            "source:tonton-outdoor.com": 0.10559501768646573,
+            "source:asadventure.com": 0.05084330438561663,
+            "source:rayonrando.com": 0.10559501768646573,
+            "source:auvieuxcampeur.fr": 0.05084330438561663,
+            "source:monbivouac.com": 0.05084330438561663,
+            "source:glisshop.com": 0.05475171330084909,
+            "source:i-run.fr": 0.1096796028498253,
+            "source:cimalp.com": 0.05475171330084909,
+            "source:facebook.com": 0.05475171330084909,
+            "source:fitnessboutique.fr": 0.06469631953992774,
+            "source:protrainer.fr": 0.06469631953992774,
+            "source:lorangebleue.fr": 0.06469631953992774,
+            "source:fflose.com": 0.06469631953992774,
+            "source:velo-critique.com": 0.06469631953992774,
+            "source:blog.therunningcollective.fr": 0.0549278895489762,
+            "source:running-addict.fr": 0.0549278895489762,
+            "source:garmin.com": 0.0549278895489762,
+            "source:runnea.fr": 0.0549278895489762,
+            "source:toutpourmasante.fr": 0.0549278895489762,
+            "source:frandroid.com": 1.294873830679015e-07,
+            "source:cleanrider.com": 1.294873830679015e-07,
+            "source:police.be": 1.294873830679015e-07,
+            "source:blog.roulezjeunesse.com": 1.294873830679015e-07,
+            "source:wee-bot.com": 1.294873830679015e-07,
+            "source:mobilityurban.fr": 1.294873830679015e-07,
+            "source:micro-mobility.fr": 1.294873830679015e-07,
+            "source:upway.be": 1.294873830679015e-07
+          },
+          "rankings": [
+            {
+              "node": "source:reddit.com",
+              "score": 0.39773742345705626
+            },
+            {
+              "node": "label:cyclisme",
+              "score": 0.38234951765972547
+            },
+            {
+              "node": "label:veloroute",
+              "score": 0.35068877017704964
+            },
+            {
+              "node": "label:fitness",
+              "score": 0.27489654126736873
+            },
+            {
+              "node": "source:materiel-velo.com",
+              "score": 0.23721451622161438
+            },
+            {
+              "node": "label:running",
+              "score": 0.23338814196458232
+            },
+            {
+              "node": "label:randonnee",
+              "score": 0.23263592666416846
+            },
+            {
+              "node": "label:camping",
+              "score": 0.21602922261311838
+            },
+            {
+              "node": "source:instagram.com",
+              "score": 0.20960896941656032
+            },
+            {
+              "node": "source:my-velo.fr",
+              "score": 0.1725181966816866
+            },
+            {
+              "node": "source:mint-bikes.com",
+              "score": 0.1725181966816866
+            },
+            {
+              "node": "source:cyclisthouse.origine-cycles.com",
+              "score": 0.1725181966816866
+            },
+            {
+              "node": "source:gravelpassion.fr",
+              "score": 0.1725181966816866
+            },
+            {
+              "node": "source:i-run.fr",
+              "score": 0.1096796028498253
+            },
+            {
+              "node": "source:hardloop.fr",
+              "score": 0.10559501768646573
+            },
+            {
+              "node": "source:tonton-outdoor.com",
+              "score": 0.10559501768646573
+            },
+            {
+              "node": "source:rayonrando.com",
+              "score": 0.10559501768646573
+            },
+            {
+              "node": "source:youvelo.fr",
+              "score": 0.08998476032765636
+            },
+            {
+              "node": "source:canyon.com",
+              "score": 0.08253343635403025
+            },
+            {
+              "node": "source:enrouelibre.fr",
+              "score": 0.08253343635403025
+            },
+            {
+              "node": "source:fitnessboutique.fr",
+              "score": 0.06469631953992774
+            },
+            {
+              "node": "source:protrainer.fr",
+              "score": 0.06469631953992774
+            },
+            {
+              "node": "source:lorangebleue.fr",
+              "score": 0.06469631953992774
+            },
+            {
+              "node": "source:fflose.com",
+              "score": 0.06469631953992774
+            },
+            {
+              "node": "source:velo-critique.com",
+              "score": 0.06469631953992774
+            },
+            {
+              "node": "source:blog.therunningcollective.fr",
+              "score": 0.0549278895489762
+            },
+            {
+              "node": "source:running-addict.fr",
+              "score": 0.0549278895489762
+            },
+            {
+              "node": "source:garmin.com",
+              "score": 0.0549278895489762
+            },
+            {
+              "node": "source:runnea.fr",
+              "score": 0.0549278895489762
+            },
+            {
+              "node": "source:toutpourmasante.fr",
+              "score": 0.0549278895489762
+            },
+            {
+              "node": "source:glisshop.com",
+              "score": 0.05475171330084909
+            },
+            {
+              "node": "source:cimalp.com",
+              "score": 0.05475171330084909
+            },
+            {
+              "node": "source:facebook.com",
+              "score": 0.05475171330084909
+            },
+            {
+              "node": "source:montania-sport.com",
+              "score": 0.05084330438561663
+            },
+            {
+              "node": "source:asadventure.com",
+              "score": 0.05084330438561663
+            },
+            {
+              "node": "source:auvieuxcampeur.fr",
+              "score": 0.05084330438561663
+            },
+            {
+              "node": "source:monbivouac.com",
+              "score": 0.05084330438561663
+            },
+            {
+              "node": "label:mobilite-urbaine",
+              "score": 3.662456265816505e-07
+            },
+            {
+              "node": "source:frandroid.com",
+              "score": 1.294873830679015e-07
+            },
+            {
+              "node": "source:cleanrider.com",
+              "score": 1.294873830679015e-07
+            },
+            {
+              "node": "source:police.be",
+              "score": 1.294873830679015e-07
+            },
+            {
+              "node": "source:blog.roulezjeunesse.com",
+              "score": 1.294873830679015e-07
+            },
+            {
+              "node": "source:wee-bot.com",
+              "score": 1.294873830679015e-07
+            },
+            {
+              "node": "source:mobilityurban.fr",
+              "score": 1.294873830679015e-07
+            },
+            {
+              "node": "source:micro-mobility.fr",
+              "score": 1.294873830679015e-07
+            },
+            {
+              "node": "source:upway.be",
+              "score": 1.294873830679015e-07
+            },
+            {
+              "node": "label:football",
+              "score": 4.254858647712153e-33
+            },
+            {
+              "node": "label:natation",
+              "score": 4.254858647712153e-33
+            },
+            {
+              "node": "label:nutrition",
+              "score": 4.254858647712153e-33
+            },
+            {
+              "node": "label:padel",
+              "score": 4.254858647712153e-33
+            },
+            {
+              "node": "label:ski",
+              "score": 4.254858647712153e-33
+            },
+            {
+              "node": "label:wintersport",
+              "score": 4.254858647712153e-33
+            }
+          ]
+        }
+      },
+      "types_calculated": [
+        "degree",
+        "betweenness",
+        "closeness",
+        "eigenvector"
+      ],
+      "total_nodes": 52
+    }
+  },
+  "communities": {
+    "louvain": {
+      "communities": [
+        [
+          "label:fitness",
+          "label:cyclisme",
+          "label:nutrition",
+          "label:veloroute",
+          "label:running",
+          "label:mobilite-urbaine"
+        ],
+        [
+          "label:randonnee",
+          "label:camping",
+          "label:natation",
+          "label:ski",
+          "label:wintersport"
+        ],
+        [
+          "label:padel",
+          "label:football"
+        ]
+      ],
+      "node_assignments": {
+        "label:fitness": 0,
+        "label:cyclisme": 0,
+        "label:nutrition": 0,
+        "label:veloroute": 0,
+        "label:running": 0,
+        "label:mobilite-urbaine": 0,
+        "label:randonnee": 1,
+        "label:camping": 1,
+        "label:natation": 1,
+        "label:ski": 1,
+        "label:wintersport": 1,
+        "label:padel": 2,
+        "label:football": 2
+      },
+      "modularity": 0.33610818368022133,
+      "algorithm": "louvain"
+    },
+    "leiden": {
+      "communities": [
+        [
+          "label:fitness",
+          "label:cyclisme",
+          "label:nutrition",
+          "label:veloroute",
+          "label:running",
+          "label:mobilite-urbaine"
+        ],
+        [
+          "label:randonnee",
+          "label:camping",
+          "label:natation",
+          "label:ski",
+          "label:wintersport"
+        ],
+        [
+          "label:padel",
+          "label:football"
+        ]
+      ],
+      "node_assignments": {
+        "label:fitness": 0,
+        "label:cyclisme": 0,
+        "label:nutrition": 0,
+        "label:veloroute": 0,
+        "label:running": 0,
+        "label:mobilite-urbaine": 0,
+        "label:randonnee": 1,
+        "label:camping": 1,
+        "label:natation": 1,
+        "label:ski": 1,
+        "label:wintersport": 1,
+        "label:padel": 2,
+        "label:football": 2
+      },
+      "modularity": 0.33610818368022133,
+      "algorithm": "leiden"
+    }
+  },
+  "paths": {
+    "cycling_to_veloroute": {
+      "concept_path": [
+        "label:cyclisme",
+        "action:ftp",
+        "asset:ftp",
+        "question:ftp-road",
+        "label:veloroute"
+      ],
+      "asset_transfer_path": [
+        "label:cyclisme",
+        "action:ftp",
+        "asset:ftp",
+        "question:ftp-road",
+        "label:veloroute"
+      ]
+    },
+    "camping_to_hiking": {
+      "concept_path": [
+        "label:camping",
+        "action:sleep",
+        "topic:sleep",
+        "concept:sleep",
+        "question:hiking-sleep",
+        "label:randonnee"
+      ],
+      "asset_transfer_path": []
+    },
+    "cycling_to_mobility": {
+      "concept_path": [],
+      "asset_transfer_path": []
+    },
+    "fitness_to_running": {
+      "concept_path": [],
+      "asset_transfer_path": []
+    }
+  },
+  "source_overlap": {
+    "cycling_to_veloroute": 0.6,
+    "camping_to_hiking": 0.3333333333333333,
+    "cycling_to_mobility": 0.0,
+    "fitness_to_running": 0.14285714285714285
+  },
+  "errors": {},
+  "link_prediction": [
+    [
+      "label:football",
+      "label:veloroute",
+      0.5
+    ],
+    [
+      "label:cyclisme",
+      "label:football",
+      0.4
+    ],
+    [
+      "label:camping",
+      "label:ski",
+      0.3333333333333333
+    ],
+    [
+      "label:fitness",
+      "label:randonnee",
+      0.3333333333333333
+    ],
+    [
+      "label:football",
+      "label:nutrition",
+      0.3333333333333333
+    ],
+    [
+      "label:mobilite-urbaine",
+      "label:veloroute",
+      0.3333333333333333
+    ],
+    [
+      "label:natation",
+      "label:randonnee",
+      0.3333333333333333
+    ],
+    [
+      "label:nutrition",
+      "label:randonnee",
+      0.3333333333333333
+    ],
+    [
+      "label:nutrition",
+      "label:veloroute",
+      0.3333333333333333
+    ],
+    [
+      "label:randonnee",
+      "label:ski",
+      0.3333333333333333
+    ],
+    [
+      "label:cyclisme",
+      "label:nutrition",
+      0.25
+    ],
+    [
+      "label:natation",
+      "label:wintersport",
+      0.25
+    ],
+    [
+      "label:running",
+      "label:wintersport",
+      0.25
+    ],
+    [
+      "label:fitness",
+      "label:mobilite-urbaine",
+      0.2
+    ],
+    [
+      "label:fitness",
+      "label:nutrition",
+      0.2
+    ],
+    [
+      "label:fitness",
+      "label:padel",
+      0.2
+    ],
+    [
+      "label:fitness",
+      "label:ski",
+      0.2
+    ],
+    [
+      "label:football",
+      "label:randonnee",
+      0.2
+    ],
+    [
+      "label:randonnee",
+      "label:veloroute",
+      0.2
+    ],
+    [
+      "label:cyclisme",
+      "label:randonnee",
+      0.16666666666666666
+    ]
+  ],
+  "node2vec": {
+    "node_count": 13,
+    "pair_similarity": {
+      "cycling_to_veloroute": 0.9622266460617042,
+      "camping_to_hiking": 0.9335131084375421,
+      "cycling_to_mobility": 0.9684131458898497,
+      "fitness_to_running": 0.9716119702519733
+    }
+  },
+  "temporal": {
+    "baseline_entities": 36,
+    "baseline_relationships": 10,
+    "august_entities": 36,
+    "august_relationships": 27
+  },
+  "v42_regression": {
+    "cycling_to_veloroute": {
+      "checks": {
+        "proximity": true,
+        "cross_impl": true,
+        "target_direct_impl": true,
+        "asset_transfer_path": true
+      },
+      "pass": true
+    },
+    "camping_to_hiking": {
+      "checks": {
+        "proximity": true,
+        "cross_impl": true,
+        "target_direct_impl": true,
+        "concept_path": true,
+        "asset_transfer_path": true
+      },
+      "pass": true
+    },
+    "cycling_to_mobility": {
+      "checks": {
+        "proximity": true,
+        "cross_impl": true,
+        "asset_transfer_path": true
+      },
+      "pass": true
+    },
+    "fitness_to_running": {
+      "checks": {
+        "proximity": true,
+        "cross_impl": true,
+        "asset_transfer_path": true
+      },
+      "pass": true
+    }
+  },
+  "all_v42_regressions_pass": true,
+  "global_guardrail": {
+    "spillover_is_global": false,
+    "bridge_vs_distant_presence_differential_pp": 0.47
+  }
+}
