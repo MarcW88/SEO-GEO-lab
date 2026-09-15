@@ -34,14 +34,14 @@ jobs:
         env:
           SEMANTICA_DISABLE_PROGRESS: '1'
         run: |
-          python experiments/semantica-decathlon/run_validation.py
+          python experiments/semantica-decathlon/run_validation_v2.py
 
       - name: Show summary
         if: always()
         run: |
           cat experiments/semantica-decathlon/results/summary.md || true
           echo '--- JSON head ---'
-          head -n 80 experiments/semantica-decathlon/results/native_results.json || true
+          head -n 120 experiments/semantica-decathlon/results/native_results.json || true
 
       - name: Upload result artifact
         if: always()
